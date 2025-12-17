@@ -7,13 +7,14 @@ const config: Config = {
   tagline: 'AI-Native Learning Platform for Humanoid Robotics',
   favicon: 'img/favicon.ico',
 
-  // Production URL
-  url: 'https://humanoid-robotics-textbook.vercel.app',
-  baseUrl: '/',
+  // Production URL - GitHub Pages
+  url: 'https://shaistatosif.github.io',
+  baseUrl: '/Hackathon1-humanoid-robotic-book/',
 
-  // GitHub pages deployment config (if needed)
-  organizationName: 'shaistatosif',
-  projectName: 'hackathon-one-humanoid-robotic-book',
+  // GitHub pages deployment config
+  organizationName: 'Shaistatosif',
+  projectName: 'Hackathon1-humanoid-robotic-book',
+  trailingSlash: false,
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -44,7 +45,7 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           routeBasePath: '/', // Serve docs at root
           editUrl:
-            'https://github.com/shaistatosif/hackathon-one-humanoid-robotic-book/tree/main/frontend/',
+            'https://github.com/Shaistatosif/Hackathon1-humanoid-robotic-book/tree/001-book-generation/frontend/',
         },
         blog: false, // Disable blog
         theme: {
@@ -100,7 +101,7 @@ const config: Config = {
           position: 'right',
         },
         {
-          href: 'https://github.com/shaistatosif/hackathon-one-humanoid-robotic-book',
+          href: 'https://github.com/Shaistatosif/Hackathon1-humanoid-robotic-book',
           label: 'GitHub',
           position: 'right',
         },
@@ -141,7 +142,7 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/shaistatosif/hackathon-one-humanoid-robotic-book',
+              href: 'https://github.com/Shaistatosif/Hackathon1-humanoid-robotic-book',
             },
           ],
         },
@@ -166,7 +167,7 @@ const config: Config = {
     announcementBar: {
       id: 'hackathon_notice',
       content:
-        '🤖 This AI-native textbook is part of a hackathon project. <a target="_blank" rel="noopener noreferrer" href="https://github.com/shaistatosif/hackathon-one-humanoid-robotic-book">Learn more</a>',
+        '🤖 This AI-native textbook is part of a hackathon project. <a target="_blank" rel="noopener noreferrer" href="https://github.com/Shaistatosif/Hackathon1-humanoid-robotic-book">Learn more</a>',
       backgroundColor: '#fafbfc',
       textColor: '#091E42',
       isCloseable: true,
