@@ -1,0 +1,413 @@
+openapi: 3.0.3
+info:
+  title: Quiz API
+  description: API for chapter quizzes and quiz attempts
+  version: 1.0.0
+
+servers:
+  - url: /api/quiz
+    description: Quiz service endpoints
+
+paths:
+  /chapters/{chapter_id}/quiz:
+    get:
+      summary: Get quiz for a chapter
+      operationId: getChapterQuiz
+      tags:
+        - Quiz
+      parameters:
+        - name: chapter_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Chapter identifier
+          example: "chapter-1"
+      responses:
+        '200':
+          description: Quiz with questions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quiz'
+        '404':
+          description: Quiz not found for chapter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /attempts:
+    post:
+      summary: Start a quiz attempt
+      operationId: startAttempt
+      tags:
+        - Attempts
+      security:
+        - sessionAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartAttemptRequest'
+      responses:
+        '201':
+          description: Attempt started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizAttempt'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Quiz not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /attempts/{attempt_id}:
+    get:
+      summary: Get quiz attempt status
+      operationId: getAttempt
+      tags:
+        - Attempts
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: attempt_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Attempt details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizAttempt'
+        '404':
+          description: Attempt not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /attempts/{attempt_id}/submit:
+    post:
+      summary: Submit quiz answers
+      operationId: submitAttempt
+      tags:
+        - Attempts
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: attempt_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmitAttemptRequest'
+      responses:
+        '200':
+          description: Quiz results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizResult'
+        '400':
+          description: Invalid submission (already completed, missing answers)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Attempt not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /history:
+    get:
+      summary: Get user's quiz attempt history
+      operationId: getHistory
+      tags:
+        - History
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: chapter_id
+          in: query
+          schema:
+            type: string
+          description: Filter by chapter
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: List of quiz attempts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizHistoryResponse'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  securitySchemes:
+    sessionAuth:
+      type: apiKey
+      in: cookie
+      name: session
+
+  schemas:
+    Quiz:
+      type: object
+      required:
+        - id
+        - chapter_id
+        - title
+        - questions
+      properties:
+        id:
+          type: string
+          format: uuid
+        chapter_id:
+          type: string
+          example: "chapter-1"
+        title:
+          type: string
+          example: "Chapter 1 Quiz: Introduction to Humanoid Robotics"
+        question_count:
+          type: integer
+          example: 10
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
+
+    Question:
+      type: object
+      required:
+        - id
+        - question_text
+        - question_type
+        - order
+      properties:
+        id:
+          type: string
+          format: uuid
+        question_text:
+          type: string
+          example: "What is the primary purpose of humanoid robots?"
+        question_type:
+          type: string
+          enum: [multiple_choice, short_answer]
+        options:
+          type: array
+          items:
+            type: string
+          description: Options for multiple choice questions
+          example: ["Industrial automation", "Human-robot interaction", "Data processing", "Energy generation"]
+        order:
+          type: integer
+          example: 1
+
+    StartAttemptRequest:
+      type: object
+      required:
+        - quiz_id
+      properties:
+        quiz_id:
+          type: string
+          format: uuid
+
+    QuizAttempt:
+      type: object
+      required:
+        - id
+        - quiz_id
+        - user_id
+        - status
+        - started_at
+      properties:
+        id:
+          type: string
+          format: uuid
+        quiz_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [in_progress, completed]
+        score:
+          type: integer
+          nullable: true
+          description: Score (only set when completed)
+        total_questions:
+          type: integer
+        started_at:
+          type: string
+          format: date-time
+        completed_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    SubmitAttemptRequest:
+      type: object
+      required:
+        - answers
+      properties:
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnswerSubmission'
+
+    AnswerSubmission:
+      type: object
+      required:
+        - question_id
+        - answer
+      properties:
+        question_id:
+          type: string
+          format: uuid
+        answer:
+          type: string
+          description: User's answer (selected option or text)
+
+    QuizResult:
+      type: object
+      required:
+        - attempt_id
+        - score
+        - total_questions
+        - percentage
+        - results
+      properties:
+        attempt_id:
+          type: string
+          format: uuid
+        score:
+          type: integer
+          description: Number of correct answers
+        total_questions:
+          type: integer
+        percentage:
+          type: number
+          format: float
+          example: 80.0
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuestionResult'
+        completed_at:
+          type: string
+          format: date-time
+
+    QuestionResult:
+      type: object
+      required:
+        - question_id
+        - is_correct
+        - user_answer
+        - correct_answer
+      properties:
+        question_id:
+          type: string
+          format: uuid
+        question_text:
+          type: string
+        is_correct:
+          type: boolean
+        user_answer:
+          type: string
+        correct_answer:
+          type: string
+
+    QuizHistoryResponse:
+      type: object
+      required:
+        - attempts
+        - total
+      properties:
+        attempts:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuizAttemptSummary'
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+
+    QuizAttemptSummary:
+      type: object
+      required:
+        - id
+        - chapter_id
+        - chapter_title
+        - score
+        - total_questions
+        - completed_at
+      properties:
+        id:
+          type: string
+          format: uuid
+        chapter_id:
+          type: string
+        chapter_title:
+          type: string
+        score:
+          type: integer
+        total_questions:
+          type: integer
+        percentage:
+          type: number
+          format: float
+        completed_at:
+          type: string
+          format: date-time
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - message
+      properties:
+        error:
+          type: string
+        message:
+          type: string

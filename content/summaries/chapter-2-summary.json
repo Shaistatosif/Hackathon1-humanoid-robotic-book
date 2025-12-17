@@ -1,0 +1,46 @@
+{
+  "chapter_id": "chapter-2",
+  "title": "Robot Components and Architecture",
+  "overview": "This chapter examines the fundamental building blocks of humanoid robots, from their mechanical structure to their software architecture. It explores how hardware and software components work together to create functional humanoid systems, covering everything from joint mechanisms to real-time operating systems.",
+  "key_concepts": [
+    {
+      "concept": "Mechanical Structure",
+      "explanation": "The physical skeleton and joints of a humanoid robot, typically made from lightweight materials like aluminum and carbon fiber to balance strength with mobility."
+    },
+    {
+      "concept": "Kinematic Chain",
+      "explanation": "A series of rigid bodies (links) connected by joints, forming the basis for calculating robot movement and positioning."
+    },
+    {
+      "concept": "Control Architecture",
+      "explanation": "The hierarchical software structure that manages robot behavior, from low-level motor control to high-level task planning."
+    },
+    {
+      "concept": "Real-Time Operating System (RTOS)",
+      "explanation": "Specialized operating systems that guarantee response times for critical robot functions like balance and safety systems."
+    },
+    {
+      "concept": "Power Systems",
+      "explanation": "Energy storage and distribution systems, typically lithium-ion batteries, that must balance capacity with weight constraints."
+    },
+    {
+      "concept": "Modular Design",
+      "explanation": "Designing robot components as interchangeable modules for easier maintenance, upgrades, and customization."
+    },
+    {
+      "concept": "Redundancy",
+      "explanation": "Including backup systems for critical components to ensure robot safety and reliability in case of failures."
+    },
+    {
+      "concept": "Middleware (ROS)",
+      "explanation": "Software frameworks like Robot Operating System that provide standardized communication between robot components and simplify development."
+    }
+  ],
+  "takeaways": [
+    "Robot architecture follows a hierarchical pattern from physical hardware through low-level control to high-level cognition",
+    "Material selection involves trade-offs between strength, weight, cost, and manufacturability",
+    "Software architecture must handle real-time constraints for safety-critical functions while supporting complex reasoning",
+    "Power management is a critical constraint that affects all design decisions in mobile humanoid robots",
+    "Standardized interfaces and modular design accelerate development and enable component reuse"
+  ]
+}

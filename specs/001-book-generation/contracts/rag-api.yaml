@@ -1,0 +1,299 @@
+openapi: 3.0.3
+info:
+  title: RAG Chatbot API
+  description: API for RAG-based question answering on textbook content
+  version: 1.0.0
+
+servers:
+  - url: /api/rag
+    description: RAG service endpoints
+
+paths:
+  /query:
+    post:
+      summary: Ask a question about textbook content
+      description: |
+        Processes a user question, retrieves relevant content chunks from the
+        vector database, and generates an answer with citations.
+      operationId: queryRag
+      tags:
+        - RAG
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RagQueryRequest'
+      responses:
+        '200':
+          description: Successful response with answer and citations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RagQueryResponse'
+        '400':
+          description: Invalid request (empty question, too long, etc.)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /sessions:
+    post:
+      summary: Create a new chat session
+      operationId: createSession
+      tags:
+        - Sessions
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSessionRequest'
+      responses:
+        '201':
+          description: Session created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatSession'
+
+  /sessions/{session_id}:
+    get:
+      summary: Get chat session with message history
+      operationId: getSession
+      tags:
+        - Sessions
+      parameters:
+        - name: session_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Session with messages
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatSessionWithMessages'
+        '404':
+          description: Session not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /sessions/{session_id}/messages:
+    post:
+      summary: Add a message to session and get response
+      operationId: addMessage
+      tags:
+        - Sessions
+      parameters:
+        - name: session_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddMessageRequest'
+      responses:
+        '200':
+          description: Assistant response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatMessage'
+        '404':
+          description: Session not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    RagQueryRequest:
+      type: object
+      required:
+        - question
+      properties:
+        question:
+          type: string
+          minLength: 3
+          maxLength: 500
+          description: The user's question about textbook content
+          example: "What are the main components of a humanoid robot?"
+        session_id:
+          type: string
+          format: uuid
+          description: Optional session ID for context continuity
+        language:
+          type: string
+          enum: [en, ur]
+          default: en
+          description: Response language preference
+
+    RagQueryResponse:
+      type: object
+      required:
+        - answer
+        - citations
+        - is_in_scope
+      properties:
+        answer:
+          type: string
+          description: The generated answer to the question
+        citations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Citation'
+          description: Source citations for the answer
+        is_in_scope:
+          type: boolean
+          description: Whether the question is within textbook scope
+        confidence:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          description: Confidence score of the answer
+        message_id:
+          type: string
+          format: uuid
+          description: ID of the stored message (if session provided)
+
+    Citation:
+      type: object
+      required:
+        - chapter_id
+        - section
+        - text
+      properties:
+        chapter_id:
+          type: string
+          description: Chapter identifier
+          example: "chapter-1"
+        section:
+          type: string
+          description: Section within chapter
+          example: "Introduction"
+        text:
+          type: string
+          description: Relevant excerpt from source
+          maxLength: 300
+        url:
+          type: string
+          description: Link to the source section
+          example: "/docs/chapter-1/introduction"
+
+    CreateSessionRequest:
+      type: object
+      properties:
+        user_id:
+          type: string
+          format: uuid
+          description: Optional user ID for authenticated users
+
+    ChatSession:
+      type: object
+      required:
+        - id
+        - created_at
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    ChatSessionWithMessages:
+      allOf:
+        - $ref: '#/components/schemas/ChatSession'
+        - type: object
+          properties:
+            messages:
+              type: array
+              items:
+                $ref: '#/components/schemas/ChatMessage'
+
+    ChatMessage:
+      type: object
+      required:
+        - id
+        - role
+        - content
+        - created_at
+      properties:
+        id:
+          type: string
+          format: uuid
+        role:
+          type: string
+          enum: [user, assistant]
+        content:
+          type: string
+        citations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Citation'
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+
+    AddMessageRequest:
+      type: object
+      required:
+        - content
+      properties:
+        content:
+          type: string
+          minLength: 1
+          maxLength: 500
+          description: User message content
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - message
+      properties:
+        error:
+          type: string
+          description: Error code
+          example: "INVALID_REQUEST"
+        message:
+          type: string
+          description: Human-readable error message
+          example: "Question cannot be empty"
+        details:
+          type: object
+          description: Additional error details

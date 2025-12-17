@@ -1,0 +1,197 @@
+/**
+ * BookmarkButton component styles.
+ */
+
+.container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Icon-only button */
+.iconButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.iconButton:hover {
+  background: var(--ifm-color-emphasis-100);
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+}
+
+.iconButton.bookmarked {
+  background: var(--ifm-color-primary-lightest);
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+}
+
+.iconButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Text-only button */
+.textButton {
+  padding: 0.375rem 0.75rem;
+  background: transparent;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ifm-color-emphasis-700);
+  transition: all 0.2s ease;
+}
+
+.textButton:hover {
+  background: var(--ifm-color-emphasis-100);
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+}
+
+.textButton.bookmarked {
+  background: var(--ifm-color-primary-lightest);
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+}
+
+.textButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Full button with icon and text */
+.fullButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ifm-color-emphasis-700);
+  transition: all 0.2s ease;
+}
+
+.fullButton:hover {
+  background: var(--ifm-color-emphasis-100);
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+}
+
+.fullButton.bookmarked {
+  background: var(--ifm-color-primary-lightest);
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+}
+
+.fullButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Icon */
+.icon {
+  font-size: 1.125rem;
+  line-height: 1;
+}
+
+/* Button text */
+.buttonText {
+  white-space: nowrap;
+}
+
+/* Loading spinner */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--ifm-color-emphasis-200);
+  border-top-color: var(--ifm-color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Tooltip */
+.tooltip {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--ifm-color-emphasis-900);
+  color: white;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 100;
+  animation: fadeIn 0.2s ease;
+}
+
+.tooltip::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-bottom-color: var(--ifm-color-emphasis-900);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Dark mode adjustments */
+[data-theme='dark'] .iconButton,
+[data-theme='dark'] .textButton,
+[data-theme='dark'] .fullButton {
+  border-color: var(--ifm-color-emphasis-400);
+  color: var(--ifm-color-emphasis-500);
+}
+
+[data-theme='dark'] .iconButton:hover,
+[data-theme='dark'] .textButton:hover,
+[data-theme='dark'] .fullButton:hover {
+  background: var(--ifm-color-emphasis-200);
+}
+
+[data-theme='dark'] .iconButton.bookmarked,
+[data-theme='dark'] .textButton.bookmarked,
+[data-theme='dark'] .fullButton.bookmarked {
+  background: rgba(37, 194, 160, 0.2);
+}
+
+[data-theme='dark'] .tooltip {
+  background: var(--ifm-color-emphasis-800);
+}
+
+[data-theme='dark'] .tooltip::before {
+  border-bottom-color: var(--ifm-color-emphasis-800);
+}

@@ -1,0 +1,74 @@
+{
+  "id": "quiz-chapter-2-001",
+  "chapter_id": "chapter-2",
+  "chapter_title": "Robot Components and Architecture",
+  "title": "Chapter 2 Quiz: Robot Components and Architecture",
+  "description": "Test your understanding of humanoid robot hardware, software architecture, and power systems.",
+  "questions": [
+    {
+      "id": "q2-001",
+      "type": "multiple_choice",
+      "question": "What is the typical hierarchy in humanoid robot software architecture?",
+      "options": [
+        "A. Hardware → Application → Control",
+        "B. Hardware → Low-Level Control → Mid-Level Control → High-Level Planning",
+        "C. AI → Motors → Sensors",
+        "D. User Interface → Database → Network"
+      ],
+      "correct_answer": "B",
+      "explanation": "Humanoid robot architecture follows a hierarchical design where low-level hardware interfaces with low-level control (motor control, sensor processing), which connects to mid-level control (motion planning), coordinated by high-level planning (AI, task planning).",
+      "order": 1,
+      "points": 1
+    },
+    {
+      "id": "q2-002",
+      "type": "multiple_choice",
+      "question": "What type of joint allows rotation around a single axis?",
+      "options": [
+        "A. Spherical joint",
+        "B. Prismatic joint",
+        "C. Revolute joint",
+        "D. Universal joint"
+      ],
+      "correct_answer": "C",
+      "explanation": "A revolute joint allows rotation around a single axis, similar to a door hinge. It provides one degree of freedom and is the most common joint type in humanoid robots.",
+      "order": 2,
+      "points": 1
+    },
+    {
+      "id": "q2-003",
+      "type": "true_false",
+      "question": "Series Elastic Actuators (SEA) are preferred for human-robot interaction because they provide compliance and force sensing.",
+      "options": ["True", "False"],
+      "correct_answer": "True",
+      "explanation": "SEAs include a spring between the motor and load, which provides natural compliance (giving way under unexpected forces) and allows force measurement through spring deflection, making them safer for human interaction.",
+      "order": 3,
+      "points": 1
+    },
+    {
+      "id": "q2-004",
+      "type": "multiple_choice",
+      "question": "Which battery technology offers the highest energy density for humanoid robots?",
+      "options": [
+        "A. Lead-acid",
+        "B. Nickel-metal hydride (NiMH)",
+        "C. Lithium-ion (Li-ion)",
+        "D. Alkaline"
+      ],
+      "correct_answer": "C",
+      "explanation": "Lithium-ion batteries offer high energy density (150-250 Wh/kg) and are the most common choice for modern humanoid robots due to their favorable power-to-weight ratio and rechargeability.",
+      "order": 4,
+      "points": 1
+    },
+    {
+      "id": "q2-005",
+      "type": "short_answer",
+      "question": "What is ROS 2 and why is it important in humanoid robotics?",
+      "options": null,
+      "correct_answer": "ROS 2 (Robot Operating System 2) is the standard middleware for robotics that provides communication infrastructure, tools, and libraries for building robot applications.",
+      "explanation": "ROS 2 is essential because it provides a standardized framework for robot software development, including inter-process communication, hardware abstraction, package management, and a rich ecosystem of tools and algorithms.",
+      "order": 5,
+      "points": 1
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "id": "quiz-chapter-1-001",
+  "chapter_id": "chapter-1",
+  "chapter_title": "Introduction to Humanoid Robotics",
+  "title": "Chapter 1 Quiz: Introduction to Humanoid Robotics",
+  "description": "Test your understanding of humanoid robot fundamentals, history, and applications.",
+  "questions": [
+    {
+      "id": "q1-001",
+      "type": "multiple_choice",
+      "question": "What is the primary characteristic that distinguishes humanoid robots from other robot types?",
+      "options": [
+        "A. They are always autonomous",
+        "B. They are designed to resemble and mimic the human body",
+        "C. They can only work in factories",
+        "D. They use artificial intelligence"
+      ],
+      "correct_answer": "B",
+      "explanation": "Humanoid robots are specifically designed to resemble the human body in form and function, with features like a head, torso, two arms, and two legs. This distinguishes them from industrial or specialized robots.",
+      "order": 1,
+      "points": 1
+    },
+    {
+      "id": "q1-002",
+      "type": "multiple_choice",
+      "question": "Approximately how many degrees of freedom (DOF) does the human body have?",
+      "options": [
+        "A. About 50 DOF",
+        "B. About 100 DOF",
+        "C. About 244 DOF",
+        "D. About 500 DOF"
+      ],
+      "correct_answer": "C",
+      "explanation": "The human body has approximately 244 degrees of freedom. Modern humanoid robots typically implement between 20-50 DOF to achieve functional human-like movement.",
+      "order": 2,
+      "points": 1
+    },
+    {
+      "id": "q1-003",
+      "type": "true_false",
+      "question": "Karel Čapek coined the term 'robot' in his 1920 play R.U.R.",
+      "options": ["True", "False"],
+      "correct_answer": "True",
+      "explanation": "Karel Čapek introduced the term 'robot' in his 1920 play R.U.R. (Rossum's Universal Robots), deriving it from the Czech word 'robota' meaning forced labor.",
+      "order": 3,
+      "points": 1
+    },
+    {
+      "id": "q1-004",
+      "type": "multiple_choice",
+      "question": "Which company developed ASIMO, one of the most famous humanoid robots?",
+      "options": [
+        "A. Boston Dynamics",
+        "B. Honda",
+        "C. Tesla",
+        "D. Sony"
+      ],
+      "correct_answer": "B",
+      "explanation": "Honda developed ASIMO (Advanced Step in Innovative Mobility), which was unveiled in 2000 and became one of the most recognized humanoid robots for its advanced bipedal locomotion.",
+      "order": 4,
+      "points": 1
+    },
+    {
+      "id": "q1-005",
+      "type": "short_answer",
+      "question": "Name three key characteristics of humanoid robots.",
+      "options": null,
+      "correct_answer": "Key characteristics include: bipedal locomotion, anthropomorphic design, dexterous manipulation, sensory perception, and social interaction capability.",
+      "explanation": "Humanoid robots share defining characteristics such as walking on two legs (bipedal locomotion), human-like body proportions (anthropomorphic design), ability to grasp objects (dexterous manipulation), multiple sensing capabilities, and the ability to interact with humans.",
+      "order": 5,
+      "points": 1
+    }
+  ]
+}

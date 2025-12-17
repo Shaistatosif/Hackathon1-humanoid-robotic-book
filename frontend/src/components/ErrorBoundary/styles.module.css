@@ -1,0 +1,97 @@
+/**
+ * ErrorBoundary component styles.
+ */
+
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  background: var(--ifm-color-danger-contrast-background);
+  border: 1px solid var(--ifm-color-danger-light);
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.errorIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.errorTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ifm-color-danger-darkest);
+  margin: 0 0 0.5rem 0;
+}
+
+.errorMessage {
+  font-size: 0.95rem;
+  color: var(--ifm-color-danger-dark);
+  margin: 0 0 1rem 0;
+  max-width: 400px;
+}
+
+.errorDetails {
+  width: 100%;
+  max-width: 600px;
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.errorDetails summary {
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--ifm-color-danger-dark);
+  padding: 0.5rem;
+}
+
+.errorDetails summary:hover {
+  text-decoration: underline;
+}
+
+.errorStack {
+  background: var(--ifm-color-emphasis-100);
+  padding: 1rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 0.5rem;
+}
+
+.retryButton {
+  padding: 0.5rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: white;
+  background: var(--ifm-color-danger);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.retryButton:hover {
+  background: var(--ifm-color-danger-dark);
+}
+
+.retryButton:focus {
+  outline: 2px solid var(--ifm-color-danger);
+  outline-offset: 2px;
+}
+
+/* Dark mode adjustments */
+[data-theme='dark'] .errorContainer {
+  background: rgba(255, 107, 107, 0.1);
+  border-color: var(--ifm-color-danger-dark);
+}
+
+[data-theme='dark'] .errorStack {
+  background: var(--ifm-color-emphasis-200);
+}

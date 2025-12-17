@@ -1,0 +1,241 @@
+/**
+ * RTL (Right-to-Left) Stylesheet for Urdu Support
+ *
+ * Uses CSS logical properties for automatic RTL/LTR adaptation.
+ */
+
+/* RTL Base Styles */
+[dir='rtl'] {
+  text-align: right;
+}
+
+/* Typography adjustments for Urdu */
+[dir='rtl'] body {
+  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', 'Nafees Nastaleeq',
+    'Urdu Typesetting', 'Traditional Arabic', serif;
+}
+
+[dir='rtl'] .markdown {
+  text-align: right;
+}
+
+/* Code blocks should remain LTR */
+[dir='rtl'] pre,
+[dir='rtl'] code,
+[dir='rtl'] .prism-code {
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: embed;
+}
+
+/* Keep inline code LTR but allow it to flow with RTL text */
+[dir='rtl'] p code,
+[dir='rtl'] li code {
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+/* Navbar adjustments */
+[dir='rtl'] .navbar__items {
+  flex-direction: row-reverse;
+}
+
+[dir='rtl'] .navbar__brand {
+  margin-inline-end: 1rem;
+  margin-inline-start: 0;
+}
+
+[dir='rtl'] .navbar__logo {
+  margin-inline-end: 0.5rem;
+  margin-inline-start: 0;
+}
+
+/* Sidebar adjustments */
+[dir='rtl'] .theme-doc-sidebar-container {
+  border-inline-end: 1px solid var(--ifm-toc-border-color);
+  border-inline-start: none;
+}
+
+[dir='rtl'] .menu__link {
+  padding-inline-start: var(--ifm-menu-link-padding-horizontal);
+  padding-inline-end: var(--ifm-menu-link-padding-horizontal);
+}
+
+[dir='rtl'] .menu__caret::before {
+  transform: rotate(180deg);
+}
+
+[dir='rtl'] .menu__list-item-collapsible .menu__link--sublist::after {
+  transform: rotate(180deg);
+}
+
+/* Table of Contents adjustments */
+[dir='rtl'] .table-of-contents {
+  border-inline-start: 1px solid var(--ifm-toc-border-color);
+  border-inline-end: none;
+  padding-inline-start: var(--ifm-toc-padding-horizontal);
+  padding-inline-end: 0;
+}
+
+/* Breadcrumbs */
+[dir='rtl'] .breadcrumbs__item:not(:last-child)::after {
+  content: '\\';
+  transform: scaleX(-1);
+}
+
+/* Lists - use logical properties */
+[dir='rtl'] .markdown ul,
+[dir='rtl'] .markdown ol {
+  padding-inline-start: 2rem;
+  padding-inline-end: 0;
+}
+
+/* Blockquotes */
+[dir='rtl'] .markdown blockquote {
+  border-inline-start: 4px solid var(--ifm-color-primary);
+  border-inline-end: none;
+  padding-inline-start: 1rem;
+  padding-inline-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+
+/* Tables */
+[dir='rtl'] .markdown table {
+  direction: rtl;
+}
+
+[dir='rtl'] .markdown th,
+[dir='rtl'] .markdown td {
+  text-align: right;
+}
+
+/* Admonitions */
+[dir='rtl'] .admonition {
+  border-inline-start: 4px solid var(--ifm-alert-border-color);
+  border-inline-end: none;
+}
+
+/* Pagination navigation */
+[dir='rtl'] .pagination-nav {
+  flex-direction: row-reverse;
+}
+
+[dir='rtl'] .pagination-nav__link--prev .pagination-nav__label::before {
+  content: ' →';
+}
+
+[dir='rtl'] .pagination-nav__link--next .pagination-nav__label::after {
+  content: '← ';
+}
+
+/* Search */
+[dir='rtl'] .DocSearch-Button-Placeholder {
+  padding-inline-start: 0.5rem;
+  padding-inline-end: 0;
+}
+
+/* Footer */
+[dir='rtl'] .footer__links {
+  flex-direction: row-reverse;
+}
+
+/* Announcement bar */
+[dir='rtl'] .announcementBar_node_modules-\\@docusaurus-theme-classic-lib-theme-AnnouncementBar-styles-module {
+  direction: rtl;
+}
+
+/* Doc item layout */
+[dir='rtl'] .docMainContainer {
+  direction: rtl;
+}
+
+/* Keep mathematical formulas LTR */
+[dir='rtl'] .math,
+[dir='rtl'] .katex {
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+/* Form elements */
+[dir='rtl'] input[type='text'],
+[dir='rtl'] input[type='email'],
+[dir='rtl'] input[type='password'],
+[dir='rtl'] textarea {
+  text-align: right;
+}
+
+/* Buttons with icons */
+[dir='rtl'] .button svg {
+  margin-inline-start: 0;
+  margin-inline-end: 0.5rem;
+}
+
+/* Dropdown menus */
+[dir='rtl'] .dropdown__menu {
+  right: auto;
+  left: 0;
+}
+
+/* Version dropdown */
+[dir='rtl'] .navbar__item.dropdown {
+  margin-inline-start: 0;
+  margin-inline-end: 0.5rem;
+}
+
+/* Language switcher icon */
+[dir='rtl'] .iconLanguage_node_modules-\\@docusaurus-theme-classic-lib-theme-NavbarItem-LocaleDropdownNavbarItem-styles-module {
+  margin-inline-end: 0.3rem;
+  margin-inline-start: 0;
+}
+
+/* Fix for flex containers */
+[dir='rtl'] .row {
+  flex-direction: row-reverse;
+}
+
+/* Hero section */
+[dir='rtl'] .hero__title,
+[dir='rtl'] .hero__subtitle {
+  text-align: right;
+}
+
+/* Feature cards */
+[dir='rtl'] .feature {
+  text-align: right;
+}
+
+/* Chat widget adjustments are in its own CSS file */
+
+/* Print styles */
+@media print {
+  [dir='rtl'] body {
+    direction: rtl;
+  }
+}
+
+/* Urdu-specific font improvements */
+@font-face {
+  font-family: 'Noto Nastaliq Urdu';
+  src: url('https://fonts.gstatic.com/s/notonastaliqurdu/v20/LhWNMUPbN-oZdNFcBy1-DJYsEoTq5pudQ9L940pGPkB3Qt_-DK2f2-_8mEw.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Ensure proper line height for Urdu text */
+[dir='rtl'] .markdown p,
+[dir='rtl'] .markdown li {
+  line-height: 2;
+}
+
+/* Headings in Urdu */
+[dir='rtl'] .markdown h1,
+[dir='rtl'] .markdown h2,
+[dir='rtl'] .markdown h3,
+[dir='rtl'] .markdown h4,
+[dir='rtl'] .markdown h5,
+[dir='rtl'] .markdown h6 {
+  text-align: right;
+  line-height: 1.6;
+}

@@ -1,0 +1,46 @@
+{
+  "chapter_id": "chapter-3",
+  "title": "Sensors and Actuators",
+  "overview": "This chapter delves into the perception and action systems of humanoid robots. It covers the various sensors that allow robots to understand their environment and their own body state, as well as the actuators that enable movement and manipulation. The chapter emphasizes sensor fusion techniques for robust perception.",
+  "key_concepts": [
+    {
+      "concept": "Proprioceptive Sensors",
+      "explanation": "Internal sensors that measure the robot's own state, including joint positions (encoders), forces (strain gauges), and orientation (IMUs)."
+    },
+    {
+      "concept": "Exteroceptive Sensors",
+      "explanation": "External sensors that perceive the environment, including cameras, LiDAR, ultrasonic sensors, and microphones."
+    },
+    {
+      "concept": "Sensor Fusion",
+      "explanation": "Combining data from multiple sensors to create a more accurate and robust understanding of the robot's state and environment."
+    },
+    {
+      "concept": "Inertial Measurement Unit (IMU)",
+      "explanation": "A sensor combining accelerometers and gyroscopes to measure acceleration and rotation, critical for balance control."
+    },
+    {
+      "concept": "Force/Torque Sensors",
+      "explanation": "Sensors that measure forces and torques at joints or end-effectors, enabling compliant manipulation and safe human interaction."
+    },
+    {
+      "concept": "Electric Motors",
+      "explanation": "The most common actuators in humanoid robots, including DC motors, brushless motors, and servo motors with integrated controllers."
+    },
+    {
+      "concept": "Series Elastic Actuators (SEA)",
+      "explanation": "Actuators with an elastic element between motor and load, providing compliance, energy storage, and safer human interaction."
+    },
+    {
+      "concept": "Computer Vision",
+      "explanation": "Using cameras and image processing algorithms for object recognition, depth perception, and visual navigation."
+    }
+  ],
+  "takeaways": [
+    "Robots need both proprioceptive (internal) and exteroceptive (external) sensors to function effectively",
+    "Sensor fusion using techniques like Kalman filtering provides more reliable state estimation than any single sensor",
+    "Actuator selection involves trade-offs between force, speed, precision, efficiency, and compliance",
+    "Force sensing and compliant actuators are essential for safe physical human-robot interaction",
+    "Modern humanoid robots combine multiple sensing modalities to build rich environmental models"
+  ]
+}

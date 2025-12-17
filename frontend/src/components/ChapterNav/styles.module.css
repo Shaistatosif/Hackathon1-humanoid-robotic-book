@@ -1,0 +1,160 @@
+/**
+ * ChapterNav component styles
+ */
+
+.chapterNav {
+  margin: 2rem 0;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+}
+
+/* Quiz Section */
+.quizSection {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.quizButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, var(--ifm-color-primary), var(--ifm-color-primary-dark));
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(46, 133, 85, 0.3);
+}
+
+.quizButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(46, 133, 85, 0.4);
+  text-decoration: none;
+  color: white;
+}
+
+.quizIcon {
+  font-size: 1.2rem;
+}
+
+.quizText {
+  font-size: 0.95rem;
+}
+
+.navContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 1rem;
+}
+
+.navLink {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  min-width: 200px;
+  max-width: 45%;
+}
+
+.navLink:hover {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.navNext {
+  text-align: right;
+  margin-left: auto;
+}
+
+.navDirection {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ifm-color-primary);
+  margin-bottom: 0.25rem;
+}
+
+.navTitle {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ifm-font-color-base);
+  line-height: 1.4;
+}
+
+.navPlaceholder {
+  min-width: 200px;
+  max-width: 45%;
+}
+
+.currentChapter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+}
+
+.currentLabel {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ifm-color-secondary-darkest);
+}
+
+.currentTitle {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ifm-font-color-secondary);
+  text-align: center;
+}
+
+/* Dark mode */
+[data-theme='dark'] .navLink {
+  background: var(--ifm-background-surface-color);
+  border-color: var(--ifm-color-emphasis-300);
+}
+
+[data-theme='dark'] .navLink:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* RTL support */
+[dir='rtl'] .navNext {
+  text-align: left;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navContainer {
+    flex-direction: column;
+  }
+
+  .navLink,
+  .navPlaceholder {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .navNext {
+    text-align: left;
+  }
+
+  .currentChapter {
+    order: -1;
+    margin-bottom: 0.5rem;
+  }
+}

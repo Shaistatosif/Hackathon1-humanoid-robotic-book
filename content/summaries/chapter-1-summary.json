@@ -1,0 +1,42 @@
+{
+  "chapter_id": "chapter-1",
+  "title": "Introduction to Humanoid Robotics",
+  "overview": "This chapter provides a comprehensive introduction to humanoid robotics, exploring what makes robots 'humanoid' and why this design approach matters. It covers the historical development of humanoid robots, their key characteristics, and the wide range of applications from healthcare to space exploration.",
+  "key_concepts": [
+    {
+      "concept": "Humanoid Robot Definition",
+      "explanation": "A robot designed with a body structure resembling the human form, typically featuring a head, torso, two arms, and two legs, enabling natural interaction with human environments."
+    },
+    {
+      "concept": "Degrees of Freedom (DoF)",
+      "explanation": "The number of independent movements a robot can make. Humanoid robots typically have 20-50+ DoF to replicate human movement capabilities."
+    },
+    {
+      "concept": "Bipedal Locomotion",
+      "explanation": "Walking on two legs like humans, which is challenging to implement but allows robots to navigate spaces designed for people."
+    },
+    {
+      "concept": "Human-Robot Interaction (HRI)",
+      "explanation": "The study and design of interactions between humans and robots, focusing on making these interactions natural and intuitive."
+    },
+    {
+      "concept": "Uncanny Valley",
+      "explanation": "A phenomenon where robots that appear almost but not quite human can evoke feelings of unease, influencing humanoid robot design decisions."
+    },
+    {
+      "concept": "Embodied AI",
+      "explanation": "Artificial intelligence that operates within a physical body, allowing robots to learn from and interact with the real world."
+    },
+    {
+      "concept": "Actuators and Sensors",
+      "explanation": "The components that allow robots to move (actuators like motors) and perceive their environment (sensors like cameras and force sensors)."
+    }
+  ],
+  "takeaways": [
+    "Humanoid robots are designed to operate in human environments without requiring environmental modifications",
+    "The human form factor enables natural communication through gestures, facial expressions, and body language",
+    "Key challenges include balance control, energy efficiency, and achieving natural movement",
+    "Applications span healthcare (patient care), industry (collaboration), service (hospitality), and research (AI development)",
+    "The field combines mechanical engineering, electrical engineering, computer science, and cognitive science"
+  ]
+}

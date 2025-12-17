@@ -1,0 +1,74 @@
+{
+  "id": "quiz-chapter-3-001",
+  "chapter_id": "chapter-3",
+  "chapter_title": "Sensors and Actuators",
+  "title": "Chapter 3 Quiz: Sensors and Actuators",
+  "description": "Test your understanding of robot sensing systems, sensor fusion, and actuator control.",
+  "questions": [
+    {
+      "id": "q3-001",
+      "type": "multiple_choice",
+      "question": "Which type of sensor measures the internal state of the robot (joint positions, orientation)?",
+      "options": [
+        "A. Exteroceptive sensors",
+        "B. Proprioceptive sensors",
+        "C. Tactile sensors",
+        "D. Environmental sensors"
+      ],
+      "correct_answer": "B",
+      "explanation": "Proprioceptive sensors measure the robot's internal state, including joint positions (encoders), orientation (IMU), and internal forces. They are named after the biological proprioception system.",
+      "order": 1,
+      "points": 1
+    },
+    {
+      "id": "q3-002",
+      "type": "multiple_choice",
+      "question": "What does a stereo camera system use to calculate depth?",
+      "options": [
+        "A. Time-of-flight measurement",
+        "B. Infrared reflection",
+        "C. Disparity between two images",
+        "D. Ultrasonic waves"
+      ],
+      "correct_answer": "C",
+      "explanation": "Stereo cameras calculate depth using disparity - the pixel difference between the same point seen from two camera viewpoints. The formula is: depth = (baseline × focal_length) / disparity.",
+      "order": 2,
+      "points": 1
+    },
+    {
+      "id": "q3-003",
+      "type": "true_false",
+      "question": "An IMU (Inertial Measurement Unit) combines an accelerometer and gyroscope to measure orientation and motion.",
+      "options": ["True", "False"],
+      "correct_answer": "True",
+      "explanation": "An IMU typically combines accelerometers (measuring linear acceleration), gyroscopes (measuring angular velocity), and sometimes magnetometers (measuring magnetic field) to provide complete motion and orientation sensing.",
+      "order": 3,
+      "points": 1
+    },
+    {
+      "id": "q3-004",
+      "type": "multiple_choice",
+      "question": "What are the three components of a PID controller?",
+      "options": [
+        "A. Position, Integration, Differentiation",
+        "B. Proportional, Integral, Derivative",
+        "C. Power, Input, Display",
+        "D. Processing, Interface, Data"
+      ],
+      "correct_answer": "B",
+      "explanation": "PID stands for Proportional (responds to current error), Integral (responds to accumulated error over time), and Derivative (responds to rate of error change). Together they form the most common control strategy.",
+      "order": 4,
+      "points": 1
+    },
+    {
+      "id": "q3-005",
+      "type": "short_answer",
+      "question": "Explain what sensor fusion is and why it is important in humanoid robotics.",
+      "options": null,
+      "correct_answer": "Sensor fusion combines data from multiple sensors to create a more accurate and reliable estimate of the robot's state or environment than any single sensor could provide.",
+      "explanation": "Sensor fusion is essential because individual sensors have limitations (noise, drift, blind spots). By combining complementary sensors (e.g., accelerometer + gyroscope), fusion algorithms like Kalman filters or complementary filters produce more robust estimates.",
+      "order": 5,
+      "points": 1
+    }
+  ]
+}

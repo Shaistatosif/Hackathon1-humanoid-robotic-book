@@ -1,0 +1,412 @@
+/**
+ * Dashboard component styles.
+ *
+ * Provides consistent styling for all dashboard components.
+ */
+
+/* Card Container */
+.card {
+  background: var(--ifm-card-background-color, #fff);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 8px;
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ifm-heading-color);
+}
+
+.count,
+.overallProgress,
+.avgScore {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ifm-color-primary);
+}
+
+/* Progress Bar */
+.progressBar {
+  height: 8px;
+  background: var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--ifm-color-primary);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+/* Chapter List (ProgressCard) */
+.chapterList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.chapterItem {
+  padding: 0.75rem;
+  background: var(--ifm-color-emphasis-100);
+  border-radius: 6px;
+}
+
+.chapterInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.chapterLink {
+  font-weight: 500;
+  color: var(--ifm-link-color);
+  text-decoration: none;
+}
+
+.chapterLink:hover {
+  text-decoration: underline;
+}
+
+.chapterMeta {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.75rem;
+}
+
+.statusBadge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.statusBadge.completed {
+  background: var(--ifm-color-success-contrast-background);
+  color: var(--ifm-color-success-dark);
+}
+
+.statusBadge.in_progress {
+  background: var(--ifm-color-warning-contrast-background);
+  color: var(--ifm-color-warning-dark);
+}
+
+.statusBadge.not_started {
+  background: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-emphasis-600);
+}
+
+.timeSpent {
+  color: var(--ifm-color-emphasis-600);
+}
+
+.chapterProgressBar {
+  height: 4px;
+  background: var(--ifm-color-emphasis-200);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.chapterProgressFill {
+  height: 100%;
+  background: var(--ifm-color-primary);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+/* Empty State */
+.emptyState {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.emptyIcon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.emptyState p {
+  margin: 0;
+  font-weight: 500;
+}
+
+.emptyHint {
+  font-size: 0.875rem;
+  color: var(--ifm-color-emphasis-500);
+  margin-top: 0.25rem;
+}
+
+/* Bookmark List */
+.bookmarkList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+.bookmarkItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  background: var(--ifm-color-emphasis-100);
+}
+
+.bookmarkLink {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  flex: 1;
+  text-decoration: none;
+  color: inherit;
+}
+
+.bookmarkLink:hover {
+  text-decoration: none;
+}
+
+.bookmarkLink:hover .bookmarkTitle {
+  color: var(--ifm-color-primary);
+}
+
+.bookmarkIcon {
+  flex-shrink: 0;
+}
+
+.bookmarkContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+.bookmarkTitle {
+  font-weight: 500;
+  color: var(--ifm-heading-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bookmarkMeta {
+  font-size: 0.75rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.bookmarkNote {
+  font-size: 0.8rem;
+  color: var(--ifm-color-emphasis-700);
+  font-style: italic;
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  color: var(--ifm-color-emphasis-500);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  font-size: 1.25rem;
+  line-height: 1;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+
+.deleteButton:hover {
+  background: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-danger);
+}
+
+/* Quiz History */
+.quizList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+.quizItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: var(--ifm-color-emphasis-100);
+  border-radius: 6px;
+}
+
+.quizInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.quizTitle {
+  font-weight: 500;
+  color: var(--ifm-heading-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.quizMeta {
+  font-size: 0.75rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.quizActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.quizScore {
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.scoreHigh {
+  background: var(--ifm-color-success-contrast-background);
+  color: var(--ifm-color-success-dark);
+}
+
+.scoreMedium {
+  background: var(--ifm-color-warning-contrast-background);
+  color: var(--ifm-color-warning-dark);
+}
+
+.scoreLow {
+  background: var(--ifm-color-danger-contrast-background);
+  color: var(--ifm-color-danger-dark);
+}
+
+.retryButton {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  background: var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  color: var(--ifm-heading-color);
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.retryButton:hover {
+  background: var(--ifm-color-primary);
+  color: white;
+  text-decoration: none;
+}
+
+/* Recommendations */
+.recommendationList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.recommendationItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--ifm-color-emphasis-100);
+  border-radius: 6px;
+}
+
+.recommendationIcon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.recommendationContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.recommendationChapter {
+  font-weight: 500;
+  color: var(--ifm-heading-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recommendationDesc {
+  font-size: 0.8rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.recommendationAction {
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.375rem 0.75rem;
+  background: var(--ifm-color-primary);
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.recommendationAction:hover {
+  background: var(--ifm-color-primary-dark);
+  color: white;
+  text-decoration: none;
+}
+
+/* Dark mode adjustments */
+[data-theme='dark'] .card {
+  background: var(--ifm-card-background-color, #1e1e1e);
+}
+
+[data-theme='dark'] .chapterItem,
+[data-theme='dark'] .bookmarkItem,
+[data-theme='dark'] .quizItem,
+[data-theme='dark'] .recommendationItem {
+  background: var(--ifm-color-emphasis-100);
+}

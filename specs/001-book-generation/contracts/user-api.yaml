@@ -1,0 +1,513 @@
+openapi: 3.0.3
+info:
+  title: User API
+  description: API for user data, progress tracking, and personalization
+  version: 1.0.0
+
+servers:
+  - url: /api/user
+    description: User service endpoints
+
+paths:
+  /profile:
+    get:
+      summary: Get user profile
+      operationId: getProfile
+      tags:
+        - Profile
+      security:
+        - sessionAuth: []
+      responses:
+        '200':
+          description: User profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    patch:
+      summary: Update user profile
+      operationId: updateProfile
+      tags:
+        - Profile
+      security:
+        - sessionAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProfileRequest'
+      responses:
+        '200':
+          description: Updated profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /progress:
+    get:
+      summary: Get reading progress across all chapters
+      operationId: getProgress
+      tags:
+        - Progress
+      security:
+        - sessionAuth: []
+      responses:
+        '200':
+          description: Reading progress
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProgressResponse'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /progress/{chapter_id}:
+    post:
+      summary: Update reading progress for a chapter
+      operationId: updateProgress
+      tags:
+        - Progress
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: chapter_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProgressRequest'
+      responses:
+        '200':
+          description: Progress updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChapterProgress'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /bookmarks:
+    get:
+      summary: Get user's bookmarks
+      operationId: getBookmarks
+      tags:
+        - Bookmarks
+      security:
+        - sessionAuth: []
+      responses:
+        '200':
+          description: List of bookmarks
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookmarksResponse'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      summary: Create a bookmark
+      operationId: createBookmark
+      tags:
+        - Bookmarks
+      security:
+        - sessionAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBookmarkRequest'
+      responses:
+        '201':
+          description: Bookmark created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bookmark'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Bookmark already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /bookmarks/{bookmark_id}:
+    delete:
+      summary: Delete a bookmark
+      operationId: deleteBookmark
+      tags:
+        - Bookmarks
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: bookmark_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Bookmark deleted
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Bookmark not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /dashboard:
+    get:
+      summary: Get personalized dashboard data
+      operationId: getDashboard
+      tags:
+        - Dashboard
+      security:
+        - sessionAuth: []
+      responses:
+        '200':
+          description: Dashboard data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardResponse'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /recommendations:
+    get:
+      summary: Get personalized chapter recommendations
+      operationId: getRecommendations
+      tags:
+        - Recommendations
+      security:
+        - sessionAuth: []
+      responses:
+        '200':
+          description: Recommended chapters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecommendationsResponse'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  securitySchemes:
+    sessionAuth:
+      type: apiKey
+      in: cookie
+      name: session
+
+  schemas:
+    UserProfile:
+      type: object
+      required:
+        - id
+        - email
+        - language_pref
+        - created_at
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        display_name:
+          type: string
+          nullable: true
+        language_pref:
+          type: string
+          enum: [en, ur]
+        created_at:
+          type: string
+          format: date-time
+        is_verified:
+          type: boolean
+
+    UpdateProfileRequest:
+      type: object
+      properties:
+        display_name:
+          type: string
+          maxLength: 100
+        language_pref:
+          type: string
+          enum: [en, ur]
+
+    ProgressResponse:
+      type: object
+      required:
+        - chapters
+        - overall_percentage
+      properties:
+        chapters:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChapterProgress'
+        overall_percentage:
+          type: number
+          format: float
+          description: Overall completion percentage
+        total_time_spent_minutes:
+          type: integer
+
+    ChapterProgress:
+      type: object
+      required:
+        - chapter_id
+        - chapter_title
+        - completed
+        - percentage
+      properties:
+        chapter_id:
+          type: string
+        chapter_title:
+          type: string
+        completed:
+          type: boolean
+        percentage:
+          type: number
+          format: float
+          description: Section completion percentage
+        time_spent_minutes:
+          type: integer
+        last_accessed:
+          type: string
+          format: date-time
+          nullable: true
+
+    UpdateProgressRequest:
+      type: object
+      properties:
+        section_id:
+          type: string
+          description: Section viewed
+        completed:
+          type: boolean
+          description: Mark chapter as completed
+        time_spent_seconds:
+          type: integer
+          minimum: 0
+          description: Additional time spent reading
+
+    BookmarksResponse:
+      type: object
+      required:
+        - bookmarks
+      properties:
+        bookmarks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Bookmark'
+
+    Bookmark:
+      type: object
+      required:
+        - id
+        - chapter_id
+        - created_at
+      properties:
+        id:
+          type: string
+          format: uuid
+        chapter_id:
+          type: string
+        chapter_title:
+          type: string
+        section_id:
+          type: string
+          nullable: true
+        section_title:
+          type: string
+          nullable: true
+        url:
+          type: string
+          description: URL to bookmarked location
+        created_at:
+          type: string
+          format: date-time
+
+    CreateBookmarkRequest:
+      type: object
+      required:
+        - chapter_id
+      properties:
+        chapter_id:
+          type: string
+        section_id:
+          type: string
+          nullable: true
+
+    DashboardResponse:
+      type: object
+      required:
+        - user
+        - progress_summary
+        - recent_activity
+        - recommendations
+      properties:
+        user:
+          type: object
+          properties:
+            display_name:
+              type: string
+            is_new_user:
+              type: boolean
+        progress_summary:
+          type: object
+          properties:
+            chapters_completed:
+              type: integer
+            total_chapters:
+              type: integer
+            completion_percentage:
+              type: number
+              format: float
+            quizzes_taken:
+              type: integer
+            average_quiz_score:
+              type: number
+              format: float
+              nullable: true
+            total_time_spent_minutes:
+              type: integer
+        recent_activity:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActivityItem'
+        recommendations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recommendation'
+
+    ActivityItem:
+      type: object
+      required:
+        - type
+        - description
+        - timestamp
+      properties:
+        type:
+          type: string
+          enum: [chapter_read, quiz_completed, bookmark_added]
+        description:
+          type: string
+          example: "Completed Chapter 1: Introduction"
+        chapter_id:
+          type: string
+        url:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+
+    RecommendationsResponse:
+      type: object
+      required:
+        - recommendations
+      properties:
+        recommendations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recommendation'
+
+    Recommendation:
+      type: object
+      required:
+        - type
+        - chapter_id
+        - chapter_title
+        - reason
+      properties:
+        type:
+          type: string
+          enum: [next_chapter, retry_quiz, continue_reading]
+        chapter_id:
+          type: string
+        chapter_title:
+          type: string
+        reason:
+          type: string
+          example: "Continue where you left off"
+        url:
+          type: string
+        priority:
+          type: integer
+          description: 1 = highest priority
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+        - message
+      properties:
+        error:
+          type: string
+        message:
+          type: string
