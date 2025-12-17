@@ -47,7 +47,6 @@ export function useReadingProgress({
   completionThreshold = 0.9,
 }: ReadingProgressOptions) {
   const { isAuthenticated } = useAuth();
-  const startTime = useRef<number>(Date.now());
   const lastUpdateTime = useRef<number>(0);
   const maxProgress = useRef<number>(0);
   const totalTimeSpent = useRef<number>(0);

@@ -1,0 +1,29 @@
+{
+  "id": "chapter-2/index",
+  "title": "Robot Components and Architecture",
+  "description": "Explore the key hardware and software components that make up humanoid robots.",
+  "source": "@site/docs/chapter-2/index.md",
+  "sourceDirName": "chapter-2",
+  "slug": "/chapter-2/",
+  "permalink": "/Hackathon1-humanoid-robotic-book/chapter-2/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/Shaistatosif/Hackathon1-humanoid-robotic-book/tree/001-book-generation/frontend/docs/chapter-2/index.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "sidebar_position": 2,
+    "title": "Robot Components and Architecture",
+    "description": "Explore the key hardware and software components that make up humanoid robots."
+  },
+  "sidebar": "textbookSidebar",
+  "previous": {
+    "title": "Chapter 2: Robot Components",
+    "permalink": "/Hackathon1-humanoid-robotic-book/category/chapter-2-robot-components"
+  },
+  "next": {
+    "title": "Chapter 3: Sensors and Actuators",
+    "permalink": "/Hackathon1-humanoid-robotic-book/category/chapter-3-sensors-and-actuators"
+  }
+}

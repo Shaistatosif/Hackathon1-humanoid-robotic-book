@@ -1,0 +1,99 @@
+{
+  "/Hackathon1-humanoid-robotic-book/ur/dashboard-ba2": {
+    "__comp": "00ee7c5d",
+    "__context": {
+      "plugin": "a7456010"
+    },
+    "config": "5e9f5e1a"
+  },
+  "/Hackathon1-humanoid-robotic-book/ur/login-b0d": {
+    "__comp": "34b338d8",
+    "__context": {
+      "plugin": "a7456010"
+    },
+    "config": "5e9f5e1a"
+  },
+  "/Hackathon1-humanoid-robotic-book/ur/quiz-cbe": {
+    "__comp": "910ecbaf",
+    "__context": {
+      "plugin": "a7456010"
+    },
+    "config": "5e9f5e1a"
+  },
+  "/Hackathon1-humanoid-robotic-book/ur/quiz/chapter-1-fa0": {
+    "__comp": "a9d10f9c",
+    "__context": {
+      "plugin": "a7456010"
+    },
+    "config": "5e9f5e1a"
+  },
+  "/Hackathon1-humanoid-robotic-book/ur/quiz/chapter-2-35e": {
+    "__comp": "df8331ac",
+    "__context": {
+      "plugin": "a7456010"
+    },
+    "config": "5e9f5e1a"
+  },
+  "/Hackathon1-humanoid-robotic-book/ur/quiz/chapter-3-4bf": {
+    "__comp": "8c16b6d9",
+    "__context": {
+      "plugin": "a7456010"
+    },
+    "config": "5e9f5e1a"
+  },
+  "/Hackathon1-humanoid-robotic-book/ur/register-150": {
+    "__comp": "a51ad1ed",
+    "__context": {
+      "plugin": "a7456010"
+    },
+    "config": "5e9f5e1a"
+  },
+  "/Hackathon1-humanoid-robotic-book/ur/-63b": {
+    "__comp": "1df93b7f",
+    "__context": {
+      "plugin": "a7456010"
+    },
+    "config": "5e9f5e1a"
+  },
+  "/Hackathon1-humanoid-robotic-book/ur/-785": {
+    "__comp": "5e95c892",
+    "__context": {
+      "plugin": "aba21aa0"
+    }
+  },
+  "/Hackathon1-humanoid-robotic-book/ur/-44f": {
+    "__comp": "a7bd4aaa",
+    "__props": "1cb20122"
+  },
+  "/Hackathon1-humanoid-robotic-book/ur/-048": {
+    "__comp": "a94703ab"
+  },
+  "/Hackathon1-humanoid-robotic-book/ur/category/chapter-1-introduction-to-humanoid-robotics-cda": {
+    "__comp": "14eb3368",
+    "__props": "f75f8172"
+  },
+  "/Hackathon1-humanoid-robotic-book/ur/category/chapter-2-robot-components-8ea": {
+    "__comp": "14eb3368",
+    "__props": "0d453d3a"
+  },
+  "/Hackathon1-humanoid-robotic-book/ur/category/chapter-3-sensors-and-actuators-b4b": {
+    "__comp": "14eb3368",
+    "__props": "2130deba"
+  },
+  "/Hackathon1-humanoid-robotic-book/ur/chapter-1-e23": {
+    "__comp": "17896441",
+    "content": "21de5c38"
+  },
+  "/Hackathon1-humanoid-robotic-book/ur/chapter-2-02f": {
+    "__comp": "17896441",
+    "content": "d80ea27c"
+  },
+  "/Hackathon1-humanoid-robotic-book/ur/chapter-3-962": {
+    "__comp": "17896441",
+    "content": "057cf2d5"
+  },
+  "/Hackathon1-humanoid-robotic-book/ur/intro-4ea": {
+    "__comp": "17896441",
+    "content": "9e1a014e"
+  }
+}

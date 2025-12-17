@@ -6,7 +6,7 @@ Handles user learning progress, bookmarks, and personalized recommendations.
 from datetime import datetime
 from typing import Any
 
-from sqlalchemy import func, select
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.models.progress import Bookmark, ProgressStatus, ReadingProgress
@@ -277,7 +277,8 @@ class ProgressService:
         avg_quiz_score = 0.0
         completed_quizzes = [a for a in quiz_attempts if a.score is not None]
         if completed_quizzes:
-            avg_quiz_score = sum(a.score for a in completed_quizzes) / len(completed_quizzes)
+            scores = [a.score for a in completed_quizzes if a.score is not None]
+            avg_quiz_score = sum(scores) / len(scores) if scores else 0.0
 
         # Generate recommendations
         recommendations = await self._generate_recommendations(
@@ -366,7 +367,7 @@ class ProgressService:
             recommendations.append({
                 "type": "continue",
                 "chapter_id": chapter_id,
-                "title": f"Continue reading",
+                "title": "Continue reading",
                 "description": f"You're {progress.progress_percent:.0f}% through this chapter. Keep going!",
                 "priority": 1,
             })
@@ -377,7 +378,7 @@ class ProgressService:
                 recommendations.append({
                     "type": "start",
                     "chapter_id": chapter_id,
-                    "title": f"Start new chapter",
+                    "title": "Start new chapter",
                     "description": "Begin learning new concepts in this chapter.",
                     "priority": 2,
                 })
@@ -396,20 +397,23 @@ class ProgressService:
 
         # Recommendation 4: Retry failed quizzes
         for attempt in quiz_attempts:
-            if attempt.score < 70:
-                chapter_id = attempt.quiz_id.replace("-quiz", "") if attempt.quiz_id else None
-                if chapter_id:
+            score = attempt.score if attempt.score is not None else 0.0
+            if score < 70:
+                retry_chapter_id = attempt.quiz_id.replace("-quiz", "") if attempt.quiz_id else None
+                if retry_chapter_id:
                     recommendations.append({
                         "type": "retry_quiz",
-                        "chapter_id": chapter_id,
+                        "chapter_id": retry_chapter_id,
                         "title": "Retry quiz",
-                        "description": f"Your score was {attempt.score}%. Try again to improve!",
+                        "description": f"Your score was {score}%. Try again to improve!",
                         "priority": 4,
                     })
                     break  # Only suggest one retry
 
         # Sort by priority and limit
-        recommendations.sort(key=lambda x: x["priority"])
+        def get_priority(rec: dict[str, Any]) -> int:
+            return int(rec.get("priority", 999))
+        recommendations.sort(key=get_priority)
         return recommendations[:5]
 
     async def get_completion_stats(self, user_id: str) -> dict[str, Any]:

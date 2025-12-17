@@ -49,9 +49,9 @@ export async function apiRequest<T>(
 ): Promise<T> {
   const { body, headers: customHeaders, ...restOptions } = options;
 
-  const headers: HeadersInit = {
+  const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    ...customHeaders,
+    ...(customHeaders as Record<string, string>),
   };
 
   // Add auth token if available

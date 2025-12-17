@@ -1,0 +1,46 @@
+/**
+ * Quiz page for Chapter 2: Robot Components and Architecture.
+ */
+
+import React from 'react';
+import Layout from '@theme/Layout';
+import Link from '@docusaurus/Link';
+import Quiz from '../../components/Quiz';
+import styles from './styles.module.css';
+
+const CHAPTER_ID = 'chapter-2';
+const CHAPTER_TITLE = 'Robot Components and Architecture';
+
+export default function Chapter2QuizPage(): JSX.Element {
+  return (
+    <Layout
+      title={`Quiz: ${CHAPTER_TITLE}`}
+      description={`Test your knowledge of ${CHAPTER_TITLE}`}
+    >
+      <div className={styles.quizPage}>
+        <div className={styles.container}>
+          <div className={styles.breadcrumb}>
+            <Link to="/">Home</Link>
+            <span className={styles.separator}>/</span>
+            <Link to={`/${CHAPTER_ID}`}>{CHAPTER_TITLE}</Link>
+            <span className={styles.separator}>/</span>
+            <span>Quiz</span>
+          </div>
+
+          <Quiz
+            chapterId={CHAPTER_ID}
+            onComplete={(_result) => {
+              // Quiz completion handled by component
+            }}
+          />
+
+          <div className={styles.backSection}>
+            <Link to={`/${CHAPTER_ID}`} className={styles.backLink}>
+              ← Back to Chapter
+            </Link>
+          </div>
+        </div>
+      </div>
+    </Layout>
+  );
+}

@@ -11,7 +11,7 @@ import { useAuth } from '../context/AuthContext';
 import { ApiError } from '../services/api';
 import styles from './auth.module.css';
 
-export default function RegisterPage(): JSX.Element {
+export default function RegisterPage(): JSX.Element | null {
   const { register, isAuthenticated } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

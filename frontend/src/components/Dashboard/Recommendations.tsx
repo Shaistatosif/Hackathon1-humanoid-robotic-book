@@ -79,7 +79,7 @@ export default function Recommendations({
           <span className={styles.emptyIcon}>🎉</span>
           <p>Great job!</p>
           <span className={styles.emptyHint}>
-            You're all caught up. Keep exploring!
+            You&apos;re all caught up. Keep exploring!
           </span>
         </div>
       </div>

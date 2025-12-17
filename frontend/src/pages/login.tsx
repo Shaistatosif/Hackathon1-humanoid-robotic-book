@@ -11,7 +11,7 @@ import { useAuth } from '../context/AuthContext';
 import { ApiError } from '../services/api';
 import styles from './auth.module.css';
 
-export default function LoginPage(): JSX.Element {
+export default function LoginPage(): JSX.Element | null {
   const { login, isAuthenticated } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -108,7 +108,7 @@ export default function LoginPage(): JSX.Element {
           </form>
 
           <p className={styles.authFooter}>
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link to="/register" className={styles.authLink}>
               Create one
             </Link>

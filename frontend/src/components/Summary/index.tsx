@@ -31,7 +31,7 @@ type SummaryState = 'loading' | 'loaded' | 'error' | 'not_found';
 export default function Summary({
   chapterId,
   collapsed = false,
-}: SummaryProps): JSX.Element {
+}: SummaryProps): JSX.Element | null {
   const [state, setState] = useState<SummaryState>('loading');
   const [summary, setSummary] = useState<ChapterSummary | null>(null);
   const [error, setError] = useState<string>('');

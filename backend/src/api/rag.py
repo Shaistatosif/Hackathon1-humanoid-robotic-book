@@ -185,6 +185,7 @@ async def get_session_history(
     if not messages:
         # Check if session exists (could be empty)
         from sqlalchemy import select
+
         from src.models.chat import ChatSession
         result = await db.execute(
             select(ChatSession).where(ChatSession.id == session_id)
@@ -216,8 +217,8 @@ async def rag_health():
 
     Verifies Qdrant connection and collection existence.
     """
-    from src.core.qdrant import qdrant_client
     from src.core.config import settings
+    from src.core.qdrant import qdrant_client
 
     try:
         collections = qdrant_client.get_collections()

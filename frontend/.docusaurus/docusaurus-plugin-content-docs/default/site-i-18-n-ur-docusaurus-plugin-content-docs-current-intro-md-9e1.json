@@ -1,0 +1,24 @@
+{
+  "id": "intro",
+  "title": "خوش آمدید",
+  "description": "AI-Native ہیومنائیڈ روبوٹکس ٹیکسٹ بک میں خوش آمدید — ایک انٹرایکٹو لرننگ پلیٹ فارم جو آپ کو ہیومنائیڈ روبوٹکس کی بنیادی اور جدید تصورات میں مہارت حاصل کرنے میں مدد کرنے کے لیے ڈیزائن کیا گیا ہے۔",
+  "source": "@site/i18n/ur/docusaurus-plugin-content-docs/current/intro.md",
+  "sourceDirName": ".",
+  "slug": "/intro",
+  "permalink": "/Hackathon1-humanoid-robotic-book/ur/intro",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/Shaistatosif/Hackathon1-humanoid-robotic-book/tree/001-book-generation/frontend/docs/intro.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_position": 1,
+    "title": "خوش آمدید"
+  },
+  "sidebar": "textbookSidebar",
+  "next": {
+    "title": "Chapter 1: Introduction to Humanoid Robotics",
+    "permalink": "/Hackathon1-humanoid-robotic-book/ur/category/chapter-1-introduction-to-humanoid-robotics"
+  }
+}

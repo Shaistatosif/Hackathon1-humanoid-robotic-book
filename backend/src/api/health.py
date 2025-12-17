@@ -26,7 +26,7 @@ class HealthStatus(BaseModel):
     timestamp: str
     version: str
     environment: str
-    checks: dict[str, dict[str, str | bool]]
+    checks: dict[str, dict[str, str | bool | int]]
 
 
 class SimpleHealth(BaseModel):
@@ -77,7 +77,7 @@ async def detailed_health_check(db: AsyncSession = Depends(get_db)):
 
     Checks all external dependencies and returns comprehensive status.
     """
-    checks = {}
+    checks: dict[str, dict[str, str | bool | int]] = {}
 
     # Check database
     try:
@@ -110,8 +110,8 @@ async def detailed_health_check(db: AsyncSession = Depends(get_db)):
     try:
         from src.core.gemini import get_gemini_client
 
-        client = get_gemini_client()
-        if client:
+        gemini_client = get_gemini_client()
+        if gemini_client:
             checks["gemini"] = {"status": "configured", "connected": True}
         else:
             checks["gemini"] = {"status": "not_configured", "connected": False}

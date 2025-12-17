@@ -7,13 +7,12 @@ import json
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Optional
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from src.models.quiz import Question, QuestionType, Quiz, QuizAttempt
+from src.models.quiz import QuestionType, Quiz, QuizAttempt
 
 
 @dataclass
@@ -154,7 +153,7 @@ class QuizService:
                     quiz_data = json.loads(quiz_path.read_text(encoding='utf-8'))
                     self._quiz_cache[chapter_id] = quiz_data
                     return quiz_data
-                except (json.JSONDecodeError, IOError):
+                except (OSError, json.JSONDecodeError):
                     continue
 
         return None
@@ -172,7 +171,7 @@ class QuizService:
         result = await self.db.execute(
             select(Quiz)
             .where(Quiz.chapter_id == chapter_id)
-            .where(Quiz.is_active == True)
+            .where(Quiz.is_active.is_(True))
             .options(selectinload(Quiz.questions))
         )
         quiz = result.scalar_one_or_none()
@@ -216,7 +215,7 @@ class QuizService:
         result = await self.db.execute(
             select(Quiz)
             .where(Quiz.chapter_id == chapter_id)
-            .where(Quiz.is_active == True)
+            .where(Quiz.is_active.is_(True))
             .options(selectinload(Quiz.questions))
         )
         quiz = result.scalar_one_or_none()
@@ -376,7 +375,7 @@ class QuizService:
         )
         quiz = db_result.scalar_one_or_none()
 
-        questions_data = []
+        questions_data: list[dict[str, str | int | None]] = []
         passing_score = 70
 
         if quiz:
@@ -393,8 +392,8 @@ class QuizService:
         else:
             # Try file-based quiz
             # Extract chapter_id from quiz_id
-            chapter_id = quiz_id.replace("quiz-", "").split("-")[0:2]
-            chapter_id = "-".join(chapter_id) if len(chapter_id) > 1 else chapter_id[0]
+            chapter_parts = quiz_id.replace("quiz-", "").split("-")[0:2]
+            chapter_id = "-".join(chapter_parts) if len(chapter_parts) > 1 else chapter_parts[0]
 
             quiz_data = await self.load_quiz_from_file(chapter_id)
             if not quiz_data:
@@ -420,16 +419,16 @@ class QuizService:
         total_points = 0
         earned_points = 0
 
-        for q in questions_data:
-            q_id = q["id"]
+        for question_dict in questions_data:
+            q_id = str(question_dict["id"]) if question_dict["id"] else ""
             user_answer = answers.get(q_id, "")
-            correct_answer = q["correct_answer"]
-            points = q["points"]
+            correct_answer = str(question_dict["correct_answer"]) if question_dict["correct_answer"] else ""
+            points = int(question_dict["points"]) if question_dict["points"] else 1
 
             is_correct = self._check_answer(
                 user_answer,
                 correct_answer,
-                q["type"]
+                str(question_dict["type"]) if question_dict["type"] else "multiple_choice"
             )
 
             total_points += points
@@ -438,11 +437,11 @@ class QuizService:
 
             answer_results.append(AnswerResult(
                 question_id=q_id,
-                question_text=q["question"],
+                question_text=str(question_dict["question"]) if question_dict.get("question") else "",
                 user_answer=user_answer,
                 correct_answer=correct_answer,
                 is_correct=is_correct,
-                explanation=q.get("explanation"),
+                explanation=str(question_dict["explanation"]) if question_dict.get("explanation") else None,
                 points_earned=points if is_correct else 0,
                 points_possible=points,
             ))

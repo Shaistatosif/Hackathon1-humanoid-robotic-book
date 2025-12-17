@@ -1,0 +1,29 @@
+{
+  "id": "chapter-1/index",
+  "title": "ہیومنائیڈ روبوٹکس کا تعارف",
+  "description": "ہیومنائیڈ روبوٹس کی بنیادی باتیں، ان کی تاریخ، اور اہم خصوصیات سیکھیں۔",
+  "source": "@site/i18n/ur/docusaurus-plugin-content-docs/current/chapter-1/index.md",
+  "sourceDirName": "chapter-1",
+  "slug": "/chapter-1/",
+  "permalink": "/Hackathon1-humanoid-robotic-book/ur/chapter-1/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/Shaistatosif/Hackathon1-humanoid-robotic-book/tree/001-book-generation/frontend/docs/chapter-1/index.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_position": 1,
+    "title": "ہیومنائیڈ روبوٹکس کا تعارف",
+    "description": "ہیومنائیڈ روبوٹس کی بنیادی باتیں، ان کی تاریخ، اور اہم خصوصیات سیکھیں۔"
+  },
+  "sidebar": "textbookSidebar",
+  "previous": {
+    "title": "Chapter 1: Introduction to Humanoid Robotics",
+    "permalink": "/Hackathon1-humanoid-robotic-book/ur/category/chapter-1-introduction-to-humanoid-robotics"
+  },
+  "next": {
+    "title": "Chapter 2: Robot Components",
+    "permalink": "/Hackathon1-humanoid-robotic-book/ur/category/chapter-2-robot-components"
+  }
+}

@@ -4,7 +4,7 @@
  * Displays quiz questions and handles answer submission.
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { get, post } from '../../services/api';
 import QuizQuestion from './QuizQuestion';
 import QuizResults from './QuizResults';
@@ -56,21 +56,16 @@ interface QuizProps {
 
 type QuizState = 'loading' | 'ready' | 'taking' | 'submitting' | 'results' | 'error';
 
-export default function Quiz({ chapterId, onComplete }: QuizProps): JSX.Element {
+export default function Quiz({ chapterId, onComplete }: QuizProps): JSX.Element | null {
   const [state, setState] = useState<QuizState>('loading');
   const [quizData, setQuizData] = useState<QuizData | null>(null);
   const [attemptId, setAttemptId] = useState<string | null>(null);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [result, setResult] = useState<QuizResult | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [startTime, setStartTime] = useState<Date | null>(null);
+  const [_startTime, setStartTime] = useState<Date | null>(null);
 
-  // Load quiz data
-  useEffect(() => {
-    loadQuiz();
-  }, [chapterId]);
-
-  async function loadQuiz() {
+  const loadQuiz = useCallback(async () => {
     setState('loading');
     setError(null);
 
@@ -82,7 +77,12 @@ export default function Quiz({ chapterId, onComplete }: QuizProps): JSX.Element 
       setError(err instanceof Error ? err.message : 'Failed to load quiz');
       setState('error');
     }
-  }
+  }, [chapterId]);
+
+  // Load quiz data
+  useEffect(() => {
+    loadQuiz();
+  }, [loadQuiz]);
 
   async function startQuiz() {
     setState('loading');

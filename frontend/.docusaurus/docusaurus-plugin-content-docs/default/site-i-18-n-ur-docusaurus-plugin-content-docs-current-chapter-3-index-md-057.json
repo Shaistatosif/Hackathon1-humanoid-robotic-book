@@ -1,0 +1,25 @@
+{
+  "id": "chapter-3/index",
+  "title": "سینسرز اور ایکچویٹرز",
+  "description": "سینسنگ اور ایکچویشن سسٹمز کا گہرائی سے جائزہ جو ہیومنائیڈ روبوٹ کے ادراک اور حرکت کو ممکن بناتے ہیں۔",
+  "source": "@site/i18n/ur/docusaurus-plugin-content-docs/current/chapter-3/index.md",
+  "sourceDirName": "chapter-3",
+  "slug": "/chapter-3/",
+  "permalink": "/Hackathon1-humanoid-robotic-book/ur/chapter-3/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/Shaistatosif/Hackathon1-humanoid-robotic-book/tree/001-book-generation/frontend/docs/chapter-3/index.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "sidebar_position": 3,
+    "title": "سینسرز اور ایکچویٹرز",
+    "description": "سینسنگ اور ایکچویشن سسٹمز کا گہرائی سے جائزہ جو ہیومنائیڈ روبوٹ کے ادراک اور حرکت کو ممکن بناتے ہیں۔"
+  },
+  "sidebar": "textbookSidebar",
+  "previous": {
+    "title": "Chapter 3: Sensors and Actuators",
+    "permalink": "/Hackathon1-humanoid-robotic-book/ur/category/chapter-3-sensors-and-actuators"
+  }
+}

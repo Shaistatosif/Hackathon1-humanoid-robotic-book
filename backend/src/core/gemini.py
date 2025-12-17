@@ -23,7 +23,7 @@ class GeminiClient:
     def __init__(self) -> None:
         """Initialize the Gemini client."""
         configure_gemini()
-        self._generation_model = None
+        self._generation_model: genai.GenerativeModel | None = None
         self._embedding_model = settings.embedding_model
 
     @property

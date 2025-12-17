@@ -22,13 +22,13 @@ This textbook covers:
 
 Professional, academically-rigorous content with clear explanations, diagrams, and code examples.
 
-### 🤖 AI-Powered Q&A
+### 🤖 AI-Powered Q&A {#chatbot}
 
 Ask questions about any topic and receive accurate answers with citations to relevant sections.
 
-### 📝 Interactive Quizzes
+### 📝 Interactive Quizzes {#quizzes}
 
-Test your understanding with chapter quizzes and track your progress.
+Test your understanding with [chapter quizzes](/quiz) and track your progress.
 
 ### 🌐 Bilingual Support
 

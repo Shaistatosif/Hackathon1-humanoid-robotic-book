@@ -1,0 +1,25 @@
+{
+  "id": "chapter-3/index",
+  "title": "Sensors and Actuators",
+  "description": "Deep dive into the sensing and actuation systems that enable humanoid robot perception and movement.",
+  "source": "@site/docs/chapter-3/index.md",
+  "sourceDirName": "chapter-3",
+  "slug": "/chapter-3/",
+  "permalink": "/Hackathon1-humanoid-robotic-book/chapter-3/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/Shaistatosif/Hackathon1-humanoid-robotic-book/tree/001-book-generation/frontend/docs/chapter-3/index.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "sidebar_position": 3,
+    "title": "Sensors and Actuators",
+    "description": "Deep dive into the sensing and actuation systems that enable humanoid robot perception and movement."
+  },
+  "sidebar": "textbookSidebar",
+  "previous": {
+    "title": "Chapter 3: Sensors and Actuators",
+    "permalink": "/Hackathon1-humanoid-robotic-book/category/chapter-3-sensors-and-actuators"
+  }
+}

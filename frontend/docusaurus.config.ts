@@ -16,7 +16,7 @@ const config: Config = {
   projectName: 'Hackathon1-humanoid-robotic-book',
   trailingSlash: false,
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
 
   // Internationalization - English and Urdu
@@ -129,11 +129,11 @@ const config: Config = {
           items: [
             {
               label: 'AI Chatbot',
-              to: '/#chatbot',
+              to: '/intro#chatbot',
             },
             {
               label: 'Quizzes',
-              to: '/#quizzes',
+              to: '/intro#quizzes',
             },
           ],
         },

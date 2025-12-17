@@ -134,17 +134,21 @@ class RAGService:
 
         # Search Qdrant
         try:
-            results = self.qdrant.search(
+            from qdrant_client.models import Filter, FieldCondition, MatchValue
+
+            query_filter = None
+            if language:
+                query_filter = Filter(
+                    must=[FieldCondition(key="language", match=MatchValue(value=language))]
+                )
+
+            results = self.qdrant.query_points(
                 collection_name=self.collection_name,
-                query_vector=query_embedding,
-                query_filter={
-                    "must": [
-                        {"key": "language", "match": {"value": language}}
-                    ]
-                } if language else None,
+                query=query_embedding,
+                query_filter=query_filter,
                 limit=self.top_k,
                 score_threshold=0.5,  # Minimum relevance threshold
-            )
+            ).points
         except Exception as e:
             print(f"Qdrant search error: {e}")
             return []
@@ -152,13 +156,13 @@ class RAGService:
         # Convert to citations
         citations = []
         for result in results:
-            payload = result.payload
+            payload = result.payload or {}
             citation = Citation(
-                chapter_id=payload.get("chapter_id", ""),
-                chapter_title=payload.get("chapter_title", ""),
-                section_id=payload.get("section_id", ""),
-                section_title=payload.get("section_title", ""),
-                text=payload.get("chunk_text", ""),
+                chapter_id=str(payload.get("chapter_id", "")),
+                chapter_title=str(payload.get("chapter_title", "")),
+                section_id=str(payload.get("section_id", "")),
+                section_title=str(payload.get("section_title", "")),
+                text=str(payload.get("chunk_text", "")),
                 relevance_score=result.score,
             )
             citations.append(citation)
@@ -365,7 +369,7 @@ Please answer the question based on the context provided. If the context doesn't
         return [
             {
                 "id": msg.id,
-                "role": msg.role.value,
+                "role": msg.role.value if hasattr(msg.role, "value") else msg.role,
                 "content": msg.content,
                 "citations": msg.citations,
                 "created_at": msg.created_at.isoformat(),
