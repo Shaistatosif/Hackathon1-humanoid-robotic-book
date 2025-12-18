@@ -7,9 +7,9 @@ const config: Config = {
   tagline: 'AI-Native Learning Platform for Humanoid Robotics',
   favicon: 'img/favicon.ico',
 
-  // Production URL - GitHub Pages
-  url: 'https://shaistatosif.github.io',
-  baseUrl: '/Hackathon1-humanoid-robotic-book/',
+  // Production URL - Vercel
+  url: 'https://hackathon-one-humanoid-robotic-book.vercel.app',
+  baseUrl: '/',
 
   // GitHub pages deployment config
   organizationName: 'Shaistatosif',
