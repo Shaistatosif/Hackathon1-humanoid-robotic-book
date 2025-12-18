@@ -5,7 +5,11 @@ title: Welcome
 
 # Welcome to Humanoid Robotics
 
-**Author: Shaista Tosif**
+:::info Book Information
+**Author:** Shaista Tosif
+**Project:** AI-Native Humanoid Robotics Textbook
+**Year:** 2024
+:::
 
 Welcome to the **AI-Native Humanoid Robotics Textbook** — an interactive learning platform designed to help you master the fundamentals and advanced concepts of humanoid robotics.
 
