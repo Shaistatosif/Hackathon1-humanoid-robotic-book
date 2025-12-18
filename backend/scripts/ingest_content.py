@@ -5,11 +5,11 @@ Content Ingestion Script for RAG System.
 This script:
 1. Reads markdown files from content/source/
 2. Splits content into sentence-aware chunks
-3. Generates embeddings using Gemini text-embedding-004
+3. Generates embeddings using Cohere or Gemini (based on configuration)
 4. Stores chunks in Qdrant vector database
 
 Usage:
-    python -m scripts.ingest_content [--language en|ur] [--collection textbook_chunks]
+    python -m scripts.ingest_content [--language en|ur] [--collection textbook_chunks] [--provider cohere|gemini]
 """
 
 import argparse
@@ -28,6 +28,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+import cohere
 import google.generativeai as genai
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, PointStruct, VectorParams
@@ -38,8 +39,12 @@ from src.core.config import settings
 # Configuration
 CHUNK_SIZE = 500  # Target characters per chunk
 CHUNK_OVERLAP = 50  # Overlap between chunks
-EMBEDDING_MODEL = "text-embedding-004"
-EMBEDDING_DIMENSION = 768
+
+# Embedding dimensions by provider
+EMBEDDING_DIMENSIONS = {
+    "cohere": 1024,  # embed-english-v3.0
+    "gemini": 768,   # text-embedding-004
+}
 
 
 def extract_frontmatter(content: str) -> tuple[dict, str]:
@@ -241,8 +246,13 @@ def process_markdown_file(
         }
 
 
+# Global clients (initialized in main)
+cohere_client: cohere.AsyncClient | None = None
+embedding_provider: str = "cohere"
+
+
 async def generate_embedding(text: str) -> list[float]:
-    """Generate embedding for text using Gemini.
+    """Generate embedding for text using configured provider.
 
     Args:
         text: Text to embed
@@ -250,43 +260,87 @@ async def generate_embedding(text: str) -> list[float]:
     Returns:
         Embedding vector
     """
-    result = await genai.embed_content_async(
-        model=f"models/{EMBEDDING_MODEL}",
-        content=text,
-        task_type="retrieval_document",
+    global cohere_client, embedding_provider
+
+    if embedding_provider == "cohere":
+        if cohere_client is None:
+            raise ValueError("Cohere client not initialized")
+        response = await cohere_client.embed(
+            texts=[text],
+            model=settings.cohere_embedding_model,
+            input_type="search_document",
+            embedding_types=["float"],
+        )
+        return response.embeddings.float_[0]
+    else:
+        result = await genai.embed_content_async(
+            model=f"models/{settings.embedding_model}",
+            content=text,
+            task_type="retrieval_document",
+        )
+        return result["embedding"]
+
+
+async def generate_embeddings_batch_cohere(texts: list[str]) -> list[list[float]]:
+    """Generate embeddings for multiple texts using Cohere (batch API).
+
+    Args:
+        texts: List of texts to embed
+
+    Returns:
+        List of embedding vectors
+    """
+    global cohere_client
+
+    if cohere_client is None:
+        raise ValueError("Cohere client not initialized")
+
+    response = await cohere_client.embed(
+        texts=texts,
+        model=settings.cohere_embedding_model,
+        input_type="search_document",
+        embedding_types=["float"],
     )
-    return result["embedding"]
+    return response.embeddings.float_
 
 
 async def process_chunks_batch(
     chunks: list[dict],
-    batch_size: int = 10
+    batch_size: int = 96  # Cohere supports up to 96 texts per batch
 ) -> list[dict]:
     """Process chunks in batches to generate embeddings.
 
+    Uses Cohere's batch API for efficiency when using Cohere provider.
+
     Args:
         chunks: List of chunk metadata dicts
-        batch_size: Number of chunks to process concurrently
+        batch_size: Number of chunks to process per batch (max 96 for Cohere)
 
     Returns:
         Chunks with embeddings added
     """
+    global embedding_provider
     results = []
 
     for i in range(0, len(chunks), batch_size):
         batch = chunks[i:i + batch_size]
         print(f"  Processing batch {i // batch_size + 1}/{(len(chunks) + batch_size - 1) // batch_size}...")
 
-        # Generate embeddings concurrently
-        tasks = [generate_embedding(chunk["chunk_text"]) for chunk in batch]
-        embeddings = await asyncio.gather(*tasks)
+        if embedding_provider == "cohere":
+            # Use Cohere's efficient batch API
+            texts = [chunk["chunk_text"] for chunk in batch]
+            embeddings = await generate_embeddings_batch_cohere(texts)
+        else:
+            # Gemini: generate embeddings one by one
+            tasks = [generate_embedding(chunk["chunk_text"]) for chunk in batch]
+            embeddings = await asyncio.gather(*tasks)
 
         for chunk, embedding in zip(batch, embeddings):
             chunk["embedding"] = embedding
             results.append(chunk)
 
         # Small delay to avoid rate limiting
-        await asyncio.sleep(0.5)
+        await asyncio.sleep(0.2)
 
     return results
 
@@ -294,7 +348,8 @@ async def process_chunks_batch(
 def setup_qdrant_collection(
     client: QdrantClient,
     collection_name: str,
-    recreate: bool = False
+    recreate: bool = False,
+    dimension: int = 1024
 ) -> None:
     """Set up Qdrant collection for storing embeddings.
 
@@ -302,6 +357,7 @@ def setup_qdrant_collection(
         client: Qdrant client
         collection_name: Name of collection
         recreate: Whether to delete and recreate existing collection
+        dimension: Vector dimension (1024 for Cohere, 768 for Gemini)
     """
     collections = client.get_collections()
     exists = any(c.name == collection_name for c in collections.collections)
@@ -312,11 +368,11 @@ def setup_qdrant_collection(
         exists = False
 
     if not exists:
-        print(f"Creating collection: {collection_name}")
+        print(f"Creating collection: {collection_name} (dimension={dimension})")
         client.create_collection(
             collection_name=collection_name,
             vectors_config=VectorParams(
-                size=EMBEDDING_DIMENSION,
+                size=dimension,
                 distance=Distance.COSINE,
             ),
         )
@@ -366,6 +422,8 @@ def upsert_chunks_to_qdrant(
 
 async def main():
     """Main ingestion function."""
+    global cohere_client, embedding_provider
+
     parser = argparse.ArgumentParser(description="Ingest textbook content for RAG")
     parser.add_argument(
         "--language",
@@ -388,15 +446,33 @@ async def main():
         default="content/source",
         help="Directory containing markdown content"
     )
+    parser.add_argument(
+        "--provider",
+        choices=["cohere", "gemini"],
+        default=settings.embedding_provider,
+        help="Embedding provider to use (default: from config)"
+    )
 
     args = parser.parse_args()
 
-    # Configure Gemini
-    if not settings.gemini_api_key:
-        print("Error: GEMINI_API_KEY not set in environment")
-        sys.exit(1)
+    # Set embedding provider
+    embedding_provider = args.provider
+    dimension = EMBEDDING_DIMENSIONS[embedding_provider]
+    print(f"Using embedding provider: {embedding_provider} (dimension={dimension})")
 
-    genai.configure(api_key=settings.gemini_api_key)
+    # Configure embedding provider
+    if embedding_provider == "cohere":
+        if not settings.cohere_api_key:
+            print("Error: COHERE_API_KEY not set in environment")
+            sys.exit(1)
+        cohere_client = cohere.AsyncClient(api_key=settings.cohere_api_key)
+        print(f"Cohere model: {settings.cohere_embedding_model}")
+    else:
+        if not settings.gemini_api_key:
+            print("Error: GEMINI_API_KEY not set in environment")
+            sys.exit(1)
+        genai.configure(api_key=settings.gemini_api_key)
+        print(f"Gemini model: {settings.embedding_model}")
 
     # Set up Qdrant client
     if settings.qdrant_url:
@@ -447,9 +523,9 @@ async def main():
     print("\nGenerating embeddings...")
     chunks_with_embeddings = await process_chunks_batch(all_chunks)
 
-    # Set up collection
+    # Set up collection with correct dimension for embedding provider
     print(f"\nSetting up Qdrant collection: {args.collection}")
-    setup_qdrant_collection(client, args.collection, args.recreate)
+    setup_qdrant_collection(client, args.collection, args.recreate, dimension)
 
     # Upload to Qdrant
     print("\nUploading to Qdrant...")

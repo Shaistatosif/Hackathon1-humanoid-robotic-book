@@ -106,18 +106,39 @@ async def detailed_health_check(db: AsyncSession = Depends(get_db)):
         logger.warning(f"Qdrant health check failed: {e}")
         checks["qdrant"] = {"status": "unhealthy", "connected": False, "error": str(e)}
 
-    # Check Gemini API
+    # Check Gemini API (for text generation)
     try:
         from src.core.gemini import get_gemini_client
 
         gemini_client = get_gemini_client()
-        if gemini_client:
+        if gemini_client and settings.gemini_api_key:
             checks["gemini"] = {"status": "configured", "connected": True}
         else:
             checks["gemini"] = {"status": "not_configured", "connected": False}
     except Exception as e:
         logger.warning(f"Gemini health check failed: {e}")
         checks["gemini"] = {"status": "unhealthy", "connected": False, "error": str(e)}
+
+    # Check Cohere API (for embeddings)
+    try:
+        if settings.cohere_api_key:
+            checks["cohere"] = {
+                "status": "configured",
+                "connected": True,
+                "model": settings.cohere_embedding_model,
+            }
+        else:
+            checks["cohere"] = {"status": "not_configured", "connected": False}
+    except Exception as e:
+        logger.warning(f"Cohere health check failed: {e}")
+        checks["cohere"] = {"status": "unhealthy", "connected": False, "error": str(e)}
+
+    # Check embedding provider configuration
+    checks["embeddings"] = {
+        "status": "configured",
+        "provider": settings.embedding_provider,
+        "dimension": settings.embedding_dimension,
+    }
 
     # Determine overall status
     critical_checks = ["database"]

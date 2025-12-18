@@ -1,6 +1,7 @@
 """RAG (Retrieval-Augmented Generation) Service.
 
 Provides question answering with citations from textbook content.
+Supports multiple embedding providers (Cohere, Gemini) via unified embedding service.
 """
 
 import json
@@ -11,6 +12,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.core.config import settings
+from src.core.embeddings import embedding_service
 from src.core.gemini import gemini_client
 from src.core.qdrant import qdrant_client
 from src.models.chat import ChatMessage, ChatSession, MessageRole
@@ -129,8 +131,8 @@ class RAGService:
         Returns:
             List of relevant citations.
         """
-        # Generate query embedding
-        query_embedding = await gemini_client.generate_query_embedding(query)
+        # Generate query embedding using configured provider (Cohere or Gemini)
+        query_embedding = await embedding_service.generate_query_embedding(query)
 
         # Search Qdrant
         try:

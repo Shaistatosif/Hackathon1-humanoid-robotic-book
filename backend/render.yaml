@@ -6,25 +6,44 @@ services:
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn src.main:app --host 0.0.0.0 --port $PORT
     envVars:
+      # Cohere API (for embeddings)
+      - key: COHERE_API_KEY
+        sync: false
+      - key: COHERE_EMBEDDING_MODEL
+        value: embed-english-v3.0
+      # Embedding provider selection
+      - key: EMBEDDING_PROVIDER
+        value: cohere
+      # Gemini API (for text generation)
       - key: GEMINI_API_KEY
         sync: false
+      # Qdrant Cloud (vector database)
       - key: QDRANT_URL
         sync: false
       - key: QDRANT_API_KEY
         sync: false
       - key: QDRANT_COLLECTION
         value: textbook_chunks
+      # Neon PostgreSQL database
       - key: DATABASE_URL
-        value: sqlite:///./app.db
+        sync: false
+      # Environment settings
       - key: ENVIRONMENT
         value: production
       - key: DEBUG
         value: false
+      # RAG configuration
       - key: RAG_TOP_K
         value: 5
-      - key: EMBEDDING_MODEL
-        value: text-embedding-004
       - key: GENERATION_MODEL
         value: gemini-1.5-flash
+      - key: GENERATION_TEMPERATURE
+        value: 0
+      # CORS
       - key: FRONTEND_URL
         value: https://hackathon-one-humanoid-robotic-book.vercel.app
+      # Authentication
+      - key: BETTER_AUTH_SECRET
+        sync: false
+      - key: SESSION_EXPIRE_MINUTES
+        value: 1440
