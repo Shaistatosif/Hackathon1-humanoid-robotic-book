@@ -5,6 +5,7 @@
  */
 
 const API_URL = process.env.VITE_API_URL || 'http://localhost:8000';
+const API_TIMEOUT = 5000; // 5 second timeout
 
 /**
  * HTTP error response from the API.
@@ -17,6 +18,16 @@ export class ApiError extends Error {
   ) {
     super(message);
     this.name = 'ApiError';
+  }
+}
+
+/**
+ * Timeout error when API doesn't respond.
+ */
+export class TimeoutError extends Error {
+  constructor(message = 'Request timed out - backend may be unavailable') {
+    super(message);
+    this.name = 'TimeoutError';
   }
 }
 
@@ -60,16 +71,32 @@ export async function apiRequest<T>(
     headers['Authorization'] = `Bearer ${token}`;
   }
 
+  // Create abort controller for timeout
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), API_TIMEOUT);
+
   const config: RequestInit = {
     ...restOptions,
     headers,
+    signal: controller.signal,
   };
 
   if (body !== undefined) {
     config.body = JSON.stringify(body);
   }
 
-  const response = await fetch(`${API_URL}${endpoint}`, config);
+  let response: Response;
+  try {
+    response = await fetch(`${API_URL}${endpoint}`, config);
+  } catch (error) {
+    clearTimeout(timeoutId);
+    if (error instanceof Error && error.name === 'AbortError') {
+      throw new TimeoutError();
+    }
+    throw new TimeoutError('Network error - backend may be unavailable');
+  } finally {
+    clearTimeout(timeoutId);
+  }
 
   if (!response.ok) {
     let errorMessage: string;

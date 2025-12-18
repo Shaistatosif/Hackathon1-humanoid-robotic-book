@@ -154,22 +154,29 @@ export default function DashboardPage(): JSX.Element {
     );
   }
 
-  // Error state
-  if (error) {
+  // Error state or backend unavailable
+  if (error || (!dashboardData && !isLoading)) {
     return (
       <Layout title="Dashboard" description="Your personalized learning dashboard">
         <main className={styles.container}>
           <div className={styles.header}>
-            <h1>Welcome back, {user?.display_name || user?.email}</h1>
+            <h1>Dashboard</h1>
           </div>
           <div className={styles.error}>
-            <p>{error}</p>
-            <button
-              onClick={() => window.location.reload()}
-              className="button button--primary"
-            >
-              Retry
-            </button>
+            <h2>Backend Not Available</h2>
+            <p>The dashboard requires a backend server which is not currently deployed.</p>
+            <p>You can still browse the textbook content:</p>
+            <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+              <Link to="/chapter-1" className="button button--primary">
+                Read Chapter 1
+              </Link>
+              <Link to="/chapter-2" className="button button--secondary">
+                Read Chapter 2
+              </Link>
+              <Link to="/chapter-3" className="button button--secondary">
+                Read Chapter 3
+              </Link>
+            </div>
           </div>
         </main>
       </Layout>
