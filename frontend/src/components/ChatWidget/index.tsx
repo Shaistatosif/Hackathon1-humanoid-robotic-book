@@ -10,7 +10,16 @@ import { useHistory, useLocation } from '@docusaurus/router';
 import ChatMessage, { Citation, Message } from './ChatMessage';
 import styles from './styles.module.css';
 
-const API_URL = process.env.VITE_API_URL || 'http://localhost:8000';
+// Production API URL - Render deployment
+const PRODUCTION_API_URL = 'https://humanoid-robotics-api.onrender.com';
+const DEVELOPMENT_API_URL = 'http://localhost:8000';
+
+// Detect environment: production if running on Vercel domain
+const isProduction = typeof window !== 'undefined' &&
+  (window.location.hostname.includes('vercel.app') ||
+   window.location.hostname.includes('hackathon-one-humanoid-robotic-book'));
+
+const API_URL = isProduction ? PRODUCTION_API_URL : DEVELOPMENT_API_URL;
 
 interface QueryResponse {
   answer: string;

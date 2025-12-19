@@ -63,6 +63,13 @@ class Settings(BaseSettings):
     def cors_origins(self) -> list[str]:
         """Get list of allowed CORS origins."""
         origins = [self.frontend_url]
+        # Production Vercel URLs
+        origins.extend([
+            "https://hackathon-one-humanoid-robotic-book.vercel.app",
+            "https://frontend-psi-eosin-17.vercel.app",
+            "https://frontend-shaista-tosifs-projects.vercel.app",
+        ])
+        # Also allow any vercel.app subdomain for preview deployments
         if self.environment == "development":
             origins.extend([
                 "http://localhost:3000",

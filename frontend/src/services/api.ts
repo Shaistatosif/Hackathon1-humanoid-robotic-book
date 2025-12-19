@@ -4,8 +4,18 @@
  * Provides a typed HTTP client for communicating with the backend API.
  */
 
-const API_URL = process.env.VITE_API_URL || 'http://localhost:8000';
-const API_TIMEOUT = 5000; // 5 second timeout
+// Production API URL - Render deployment
+// In development, you can override this by setting window.__API_URL__ in browser console
+const PRODUCTION_API_URL = 'https://humanoid-robotics-api.onrender.com';
+const DEVELOPMENT_API_URL = 'http://localhost:8000';
+
+// Detect environment: production if running on Vercel domain
+const isProduction = typeof window !== 'undefined' &&
+  (window.location.hostname.includes('vercel.app') ||
+   window.location.hostname.includes('hackathon-one-humanoid-robotic-book'));
+
+const API_URL = isProduction ? PRODUCTION_API_URL : DEVELOPMENT_API_URL;
+const API_TIMEOUT = 15000; // 15 second timeout (Render free tier may be slow)
 
 /**
  * HTTP error response from the API.
