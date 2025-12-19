@@ -49,6 +49,7 @@ interface ChapterItem {
   title: string;
   description: string;
   slug: string;
+  image: string;
 }
 
 const chapters: ChapterItem[] = [
@@ -57,18 +58,21 @@ const chapters: ChapterItem[] = [
     title: 'Introduction to Humanoid Robotics',
     description: 'Learn the fundamentals, history, and key characteristics of humanoid robots.',
     slug: '/chapter-1',
+    image: '/img/chapters/chapter-1.svg',
   },
   {
     number: 2,
     title: 'Robot Components and Architecture',
     description: 'Explore hardware and software components that make up humanoid systems.',
     slug: '/chapter-2',
+    image: '/img/chapters/chapter-2.svg',
   },
   {
     number: 3,
     title: 'Sensors and Actuators',
     description: 'Deep dive into sensing and actuation systems for perception and movement.',
     slug: '/chapter-3',
+    image: '/img/chapters/chapter-3.svg',
   },
 ];
 
@@ -109,13 +113,18 @@ function Feature({ title, description, icon }: FeatureItem) {
   );
 }
 
-function ChapterCard({ number, title, description, slug }: ChapterItem) {
+function ChapterCard({ number, title, description, slug, image }: ChapterItem) {
   return (
     <Link to={slug} className={styles.chapterCard}>
-      <div className={styles.chapterNumber}>Chapter {number}</div>
-      <h3 className={styles.chapterTitle}>{title}</h3>
-      <p className={styles.chapterDescription}>{description}</p>
-      <span className={styles.chapterLink}>Read chapter →</span>
+      <div className={styles.chapterImageWrapper}>
+        <img src={image} alt={`Chapter ${number}: ${title}`} className={styles.chapterImage} />
+      </div>
+      <div className={styles.chapterContent}>
+        <div className={styles.chapterNumber}>Chapter {number}</div>
+        <h3 className={styles.chapterTitle}>{title}</h3>
+        <p className={styles.chapterDescription}>{description}</p>
+        <span className={styles.chapterLink}>Read chapter →</span>
+      </div>
     </Link>
   );
 }

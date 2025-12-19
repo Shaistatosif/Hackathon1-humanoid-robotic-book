@@ -5,7 +5,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'Humanoid Robotics Textbook',
   tagline: 'AI-Native Learning Platform for Humanoid Robotics',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon.svg',
 
   // Production URL - Vercel
   url: 'https://hackathon-one-humanoid-robotic-book.vercel.app',
@@ -63,7 +63,7 @@ const config: Config = {
 
   themeConfig: {
     // Social card image
-    image: 'img/social-card.jpg',
+    image: 'img/social-card.svg',
 
     // Search configuration (placeholder for Algolia)
     // To enable, add your Algolia credentials

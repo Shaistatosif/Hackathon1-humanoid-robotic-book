@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" width="400" height="250">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="bg1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a5f;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="robot1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#1d4ed8"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="400" height="250" fill="url(#bg1)"/>
+
+  <!-- Grid Pattern -->
+  <g stroke="#334155" stroke-width="0.5" opacity="0.3">
+    <line x1="0" y1="50" x2="400" y2="50"/>
+    <line x1="0" y1="100" x2="400" y2="100"/>
+    <line x1="0" y1="150" x2="400" y2="150"/>
+    <line x1="0" y1="200" x2="400" y2="200"/>
+    <line x1="80" y1="0" x2="80" y2="250"/>
+    <line x1="160" y1="0" x2="160" y2="250"/>
+    <line x1="240" y1="0" x2="240" y2="250"/>
+    <line x1="320" y1="0" x2="320" y2="250"/>
+  </g>
+
+  <!-- Main Humanoid Robot -->
+  <g transform="translate(200, 125)">
+    <!-- Head -->
+    <rect x="-30" y="-85" width="60" height="50" rx="10" fill="url(#robot1)" stroke="#60a5fa" stroke-width="2"/>
+    <!-- Eyes -->
+    <circle cx="-12" cy="-65" r="8" fill="#ffffff"/>
+    <circle cx="12" cy="-65" r="8" fill="#ffffff"/>
+    <circle cx="-12" cy="-65" r="4" fill="#0f172a"/>
+    <circle cx="12" cy="-65" r="4" fill="#0f172a"/>
+    <!-- Eye glow -->
+    <circle cx="-10" cy="-67" r="1.5" fill="#ffffff"/>
+    <circle cx="14" cy="-67" r="1.5" fill="#ffffff"/>
+    <!-- Antenna -->
+    <line x1="0" y1="-85" x2="0" y2="-100" stroke="#60a5fa" stroke-width="3"/>
+    <circle cx="0" cy="-102" r="5" fill="#ef4444">
+      <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Neck -->
+    <rect x="-10" y="-35" width="20" height="12" fill="#64748b"/>
+
+    <!-- Body -->
+    <rect x="-40" y="-23" width="80" height="70" rx="8" fill="url(#robot1)" stroke="#60a5fa" stroke-width="2"/>
+    <!-- Chest panel -->
+    <rect x="-25" y="-15" width="50" height="40" rx="4" fill="#0f172a"/>
+    <!-- Heart/Core -->
+    <circle cx="0" cy="5" r="12" fill="none" stroke="#22c55e" stroke-width="2">
+      <animate attributeName="r" values="10;12;10" dur="1s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="0" cy="5" r="5" fill="#22c55e">
+      <animate attributeName="opacity" values="1;0.6;1" dur="1s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Arms -->
+    <rect x="-60" y="-20" width="18" height="55" rx="6" fill="#64748b"/>
+    <rect x="42" y="-20" width="18" height="55" rx="6" fill="#64748b"/>
+    <!-- Hands -->
+    <circle cx="-51" cy="40" r="8" fill="#64748b"/>
+    <circle cx="51" cy="40" r="8" fill="#64748b"/>
+
+    <!-- Legs -->
+    <rect x="-25" y="50" width="18" height="45" rx="6" fill="#64748b"/>
+    <rect x="7" y="50" width="18" height="45" rx="6" fill="#64748b"/>
+    <!-- Feet -->
+    <rect x="-28" y="92" width="24" height="10" rx="3" fill="#475569"/>
+    <rect x="4" y="92" width="24" height="10" rx="3" fill="#475569"/>
+  </g>
+
+  <!-- Decorative Elements -->
+  <circle cx="50" cy="40" r="3" fill="#60a5fa" opacity="0.6"/>
+  <circle cx="350" cy="60" r="4" fill="#22c55e" opacity="0.5"/>
+  <circle cx="70" cy="200" r="2" fill="#f59e0b" opacity="0.7"/>
+  <circle cx="340" cy="190" r="3" fill="#60a5fa" opacity="0.6"/>
+
+  <!-- Chapter Label -->
+  <rect x="20" y="20" width="100" height="30" rx="15" fill="#3b82f6" opacity="0.9"/>
+  <text x="70" y="41" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">Chapter 1</text>
+</svg>

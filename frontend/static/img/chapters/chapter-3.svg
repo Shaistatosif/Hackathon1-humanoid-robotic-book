@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" width="400" height="250">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#14532d;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#22c55e;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:#22c55e;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="400" height="250" fill="url(#bg3)"/>
+
+  <!-- Sensor Waves Background -->
+  <g opacity="0.2">
+    <circle cx="100" cy="125" r="40" fill="none" stroke="#22c55e" stroke-width="1">
+      <animate attributeName="r" values="30;60;30" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.5;0;0.5" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="300" cy="125" r="40" fill="none" stroke="#f59e0b" stroke-width="1">
+      <animate attributeName="r" values="30;60;30" dur="3s" repeatCount="indefinite" begin="1s"/>
+      <animate attributeName="opacity" values="0.5;0;0.5" dur="3s" repeatCount="indefinite" begin="1s"/>
+    </circle>
+  </g>
+
+  <!-- LIDAR Sensor -->
+  <g transform="translate(50, 40)">
+    <rect x="0" y="0" width="100" height="80" rx="8" fill="#1e293b" stroke="#22c55e" stroke-width="2"/>
+    <text x="50" y="20" font-family="monospace" font-size="10" fill="#22c55e" text-anchor="middle">LIDAR</text>
+
+    <!-- Spinning element -->
+    <circle cx="50" cy="50" r="25" fill="none" stroke="#22c55e" stroke-width="2"/>
+    <line x1="50" y1="25" x2="50" y2="45" stroke="#22c55e" stroke-width="3">
+      <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="2s" repeatCount="indefinite"/>
+    </line>
+    <circle cx="50" cy="50" r="5" fill="#22c55e"/>
+
+    <!-- Detection beams -->
+    <g opacity="0.5">
+      <line x1="75" y1="50" x2="100" y2="35" stroke="#22c55e" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="75" y1="50" x2="100" y2="50" stroke="#22c55e" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="75" y1="50" x2="100" y2="65" stroke="#22c55e" stroke-width="1" stroke-dasharray="3,2"/>
+    </g>
+  </g>
+
+  <!-- Camera/Vision Sensor -->
+  <g transform="translate(250, 40)">
+    <rect x="0" y="0" width="100" height="80" rx="8" fill="#1e293b" stroke="#60a5fa" stroke-width="2"/>
+    <text x="50" y="20" font-family="monospace" font-size="10" fill="#60a5fa" text-anchor="middle">VISION</text>
+
+    <!-- Camera lens -->
+    <circle cx="50" cy="52" r="22" fill="#0f172a" stroke="#60a5fa" stroke-width="2"/>
+    <circle cx="50" cy="52" r="15" fill="#1e3a5f"/>
+    <circle cx="50" cy="52" r="8" fill="#60a5fa"/>
+    <circle cx="45" cy="48" r="3" fill="#ffffff" opacity="0.6"/>
+  </g>
+
+  <!-- Servo/Actuator -->
+  <g transform="translate(50, 140)">
+    <rect x="0" y="0" width="100" height="80" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="50" y="20" font-family="monospace" font-size="10" fill="#f59e0b" text-anchor="middle">ACTUATOR</text>
+
+    <!-- Motor representation -->
+    <rect x="15" y="30" width="30" height="40" rx="4" fill="#475569"/>
+    <circle cx="30" cy="50" r="12" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/>
+    <line x1="30" y1="38" x2="30" y2="50" stroke="#f59e0b" stroke-width="3"/>
+
+    <!-- Arm/shaft -->
+    <rect x="45" y="45" width="45" height="10" rx="3" fill="#64748b"/>
+    <circle cx="85" cy="50" r="6" fill="#f59e0b"/>
+
+    <!-- Motion indicator -->
+    <path d="M70,35 L80,35 L75,28 Z" fill="#f59e0b">
+      <animate attributeName="opacity" values="1;0.3;1" dur="0.5s" repeatCount="indefinite"/>
+    </path>
+    <path d="M70,65 L80,65 L75,72 Z" fill="#f59e0b">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="0.5s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <!-- Force/Touch Sensor -->
+  <g transform="translate(250, 140)">
+    <rect x="0" y="0" width="100" height="80" rx="8" fill="#1e293b" stroke="#ec4899" stroke-width="2"/>
+    <text x="50" y="20" font-family="monospace" font-size="10" fill="#ec4899" text-anchor="middle">TOUCH</text>
+
+    <!-- Hand with pressure points -->
+    <g transform="translate(20, 25)">
+      <!-- Palm -->
+      <ellipse cx="30" cy="35" rx="25" ry="20" fill="#475569" stroke="#64748b" stroke-width="1"/>
+      <!-- Fingers -->
+      <rect x="10" y="5" width="8" height="25" rx="4" fill="#475569"/>
+      <rect x="22" y="0" width="8" height="28" rx="4" fill="#475569"/>
+      <rect x="34" y="2" width="8" height="26" rx="4" fill="#475569"/>
+      <rect x="46" y="8" width="8" height="22" rx="4" fill="#475569"/>
+
+      <!-- Pressure sensors (glowing dots) -->
+      <circle cx="14" cy="15" r="3" fill="#ec4899">
+        <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="26" cy="12" r="3" fill="#ec4899">
+        <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="38" cy="14" r="3" fill="#ec4899">
+        <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite" begin="0.5s"/>
+      </circle>
+      <circle cx="30" cy="35" r="4" fill="#ec4899">
+        <animate attributeName="opacity" values="0.7;1;0.7" dur="1s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+  </g>
+
+  <!-- Central Connection Hub -->
+  <g transform="translate(175, 100)">
+    <rect x="0" y="0" width="50" height="50" rx="25" fill="#0f172a" stroke="#a78bfa" stroke-width="3"/>
+    <text x="25" y="30" font-family="monospace" font-size="10" fill="#a78bfa" text-anchor="middle">HUB</text>
+  </g>
+
+  <!-- Connection lines -->
+  <g stroke="#64748b" stroke-width="2" fill="none" opacity="0.6">
+    <path d="M150,80 L175,110"/>
+    <path d="M250,80 L225,110"/>
+    <path d="M150,180 L175,150"/>
+    <path d="M250,180 L225,150"/>
+  </g>
+
+  <!-- Data flow particles -->
+  <circle r="3" fill="#22c55e">
+    <animateMotion dur="2s" repeatCount="indefinite" path="M150,80 L175,110"/>
+  </circle>
+  <circle r="3" fill="#60a5fa">
+    <animateMotion dur="2s" repeatCount="indefinite" path="M250,80 L225,110" begin="0.5s"/>
+  </circle>
+
+  <!-- Chapter Label -->
+  <rect x="20" y="10" width="100" height="30" rx="15" fill="#22c55e" opacity="0.9"/>
+  <text x="70" y="31" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">Chapter 3</text>
+</svg>

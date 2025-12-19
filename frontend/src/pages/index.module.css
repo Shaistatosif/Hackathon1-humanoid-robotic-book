@@ -85,13 +85,13 @@
 .chapterCard {
   display: flex;
   flex-direction: column;
-  padding: 1.5rem;
   border-radius: 12px;
   background: var(--ifm-background-surface-color);
   border: 1px solid var(--ifm-color-emphasis-200);
   text-decoration: none;
   color: inherit;
   transition: all 0.2s ease;
+  overflow: hidden;
 }
 
 .chapterCard:hover {
@@ -99,6 +99,31 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   border-color: var(--ifm-color-primary);
   text-decoration: none;
+}
+
+.chapterCard:hover .chapterImage {
+  transform: scale(1.05);
+}
+
+.chapterImageWrapper {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+}
+
+.chapterImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.chapterContent {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .chapterNumber {
