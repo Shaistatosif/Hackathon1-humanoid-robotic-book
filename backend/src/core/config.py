@@ -67,6 +67,7 @@ class Settings(BaseSettings):
         # Production Vercel URLs
         origins.extend([
             "https://hackathon-one-humanoid-robotic-book.vercel.app",
+            "https://hackathon1-humanoid-robotic-book.vercel.app",
             "https://frontend-psi-eosin-17.vercel.app",
             "https://frontend-shaista-tosifs-projects.vercel.app",
         ])
