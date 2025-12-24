@@ -5,16 +5,16 @@ Provides text embedding and generation capabilities using Google's Gemini API.
 
 from functools import lru_cache
 
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 
 from src.core.config import settings
 
 
 @lru_cache
-def configure_gemini() -> None:
-    """Configure the Gemini API with the API key."""
-    if settings.gemini_api_key:
-        genai.configure(api_key=settings.gemini_api_key)
+def get_client() -> genai.Client:
+    """Get configured Gemini client."""
+    return genai.Client(api_key=settings.gemini_api_key)
 
 
 class GeminiClient:
@@ -22,21 +22,8 @@ class GeminiClient:
 
     def __init__(self) -> None:
         """Initialize the Gemini client."""
-        configure_gemini()
-        self._generation_model: genai.GenerativeModel | None = None
+        self._client = get_client()
         self._embedding_model = settings.embedding_model
-
-    @property
-    def generation_model(self) -> genai.GenerativeModel:
-        """Get or create the generation model instance."""
-        if self._generation_model is None:
-            self._generation_model = genai.GenerativeModel(
-                model_name=settings.generation_model,
-                generation_config=genai.GenerationConfig(
-                    temperature=settings.generation_temperature,
-                ),
-            )
-        return self._generation_model
 
     async def generate_text(
         self,
@@ -52,17 +39,17 @@ class GeminiClient:
         Returns:
             Generated text response.
         """
-        model = self.generation_model
+        config = types.GenerateContentConfig(
+            temperature=settings.generation_temperature,
+        )
         if system_instruction:
-            model = genai.GenerativeModel(
-                model_name=settings.generation_model,
-                generation_config=genai.GenerationConfig(
-                    temperature=settings.generation_temperature,
-                ),
-                system_instruction=system_instruction,
-            )
+            config.system_instruction = system_instruction
 
-        response = await model.generate_content_async(prompt)
+        response = self._client.models.generate_content(
+            model=settings.generation_model,
+            contents=prompt,
+            config=config,
+        )
         return response.text
 
     async def generate_embedding(self, text: str) -> list[float]:
@@ -74,12 +61,11 @@ class GeminiClient:
         Returns:
             Embedding vector as list of floats.
         """
-        result = await genai.embed_content_async(
-            model=f"models/{self._embedding_model}",
-            content=text,
-            task_type="retrieval_document",
+        response = self._client.models.embed_content(
+            model=self._embedding_model,
+            contents=text,
         )
-        return result["embedding"]
+        return response.embeddings[0].values
 
     async def generate_query_embedding(self, query: str) -> list[float]:
         """Generate an embedding vector optimized for queries.
@@ -90,12 +76,11 @@ class GeminiClient:
         Returns:
             Embedding vector as list of floats.
         """
-        result = await genai.embed_content_async(
-            model=f"models/{self._embedding_model}",
-            content=query,
-            task_type="retrieval_query",
+        response = self._client.models.embed_content(
+            model=self._embedding_model,
+            contents=query,
         )
-        return result["embedding"]
+        return response.embeddings[0].values
 
 
 @lru_cache
