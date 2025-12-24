@@ -136,18 +136,10 @@ class RAGService:
 
         # Search Qdrant
         try:
-            from qdrant_client.models import Filter, FieldCondition, MatchValue
-
-            query_filter = None
-            if language:
-                query_filter = Filter(
-                    must=[FieldCondition(key="language", match=MatchValue(value=language))]
-                )
-
+            # Note: Language filter disabled - Qdrant collection needs index on "language" field
             results = self.qdrant.query_points(
                 collection_name=self.collection_name,
                 query=query_embedding,
-                query_filter=query_filter,
                 limit=self.top_k,
                 score_threshold=0.5,  # Minimum relevance threshold
             ).points
