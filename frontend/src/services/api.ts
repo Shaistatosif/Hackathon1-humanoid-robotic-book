@@ -4,9 +4,9 @@
  * Provides a typed HTTP client for communicating with the backend API.
  */
 
-// Production API URL - Render deployment
+// Production API URL - Railway deployment
 // In development, you can override this by setting window.__API_URL__ in browser console
-const PRODUCTION_API_URL = 'https://humanoid-robotics-api.onrender.com';
+const PRODUCTION_API_URL = 'https://hackathon1-humanoid-robotic-book-production.up.railway.app';
 const DEVELOPMENT_API_URL = 'http://localhost:8000';
 
 // Detect environment: production if running on Vercel domain
