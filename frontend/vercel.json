@@ -3,7 +3,7 @@
   "framework": "docusaurus-2",
   "buildCommand": "npm run build",
   "outputDirectory": "build",
-  "installCommand": "npm install",
+  "installCommand": "rm -rf node_modules && npm install",
   "devCommand": "npm run start",
   "cleanUrls": true,
   "trailingSlash": false,
