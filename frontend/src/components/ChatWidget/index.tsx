@@ -10,8 +10,8 @@ import { useHistory, useLocation } from '@docusaurus/router';
 import ChatMessage, { Citation, Message } from './ChatMessage';
 import styles from './styles.module.css';
 
-// Production API URL - Render deployment
-const PRODUCTION_API_URL = 'https://humanoid-robotics-api.onrender.com';
+// Production API URL - Railway deployment
+const PRODUCTION_API_URL = 'https://hackathon1-humanoid-robotic-book-production.up.railway.app';
 const DEVELOPMENT_API_URL = 'http://localhost:8000';
 
 // Detect environment: production if running on Vercel domain
