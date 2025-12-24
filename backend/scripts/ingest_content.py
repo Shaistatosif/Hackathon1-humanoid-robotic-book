@@ -490,7 +490,6 @@ async def main():
         )
     else:
         # Use local persistent storage
-        from pathlib import Path
         qdrant_path = Path(settings.qdrant_path)
         qdrant_path.mkdir(parents=True, exist_ok=True)
         print(f"Using local Qdrant storage at: {qdrant_path.absolute()}")
