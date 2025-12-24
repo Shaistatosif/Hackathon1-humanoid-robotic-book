@@ -132,6 +132,27 @@ class CohereClient:
         )
         return response.embeddings.float_
 
+    async def generate_text(
+        self,
+        prompt: str,
+        system_instruction: str | None = None,
+    ) -> str:
+        """Generate text using Cohere Command model.
+
+        Args:
+            prompt: The user prompt to generate from.
+            system_instruction: Optional system instruction for context.
+
+        Returns:
+            Generated text response.
+        """
+        response = await self.client.chat(
+            model="command-r-08-2024",
+            message=prompt,
+            preamble=system_instruction,
+        )
+        return response.text
+
 
 @lru_cache
 def get_cohere_client() -> CohereClient:

@@ -47,6 +47,7 @@ class Settings(BaseSettings):
     qdrant_url: str = ""
     qdrant_api_key: str = ""
     qdrant_collection: str = "textbook_chunks"
+    qdrant_path: str = "./qdrant_data"  # Local storage path
 
     # Authentication
     better_auth_secret: str = ""

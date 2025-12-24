@@ -152,7 +152,9 @@ class RAGService:
                 score_threshold=0.5,  # Minimum relevance threshold
             ).points
         except Exception as e:
+            import traceback
             print(f"Qdrant search error: {e}")
+            print(f"Qdrant error traceback: {traceback.format_exc()}")
             return []
 
         # Convert to citations
@@ -216,14 +218,16 @@ User Question: {query}
 
 Please answer the question based on the context provided. If the context doesn't contain relevant information, say so."""
 
-        # Generate response
+        # Generate response using Gemini
         try:
             answer = await gemini_client.generate_text(
                 prompt=prompt,
                 system_instruction=RAG_SYSTEM_PROMPT,
             )
         except Exception as e:
+            import traceback
             print(f"Generation error: {e}")
+            print(f"Generation error traceback: {traceback.format_exc()}")
             answer = "I'm sorry, I encountered an error generating a response. Please try again."
 
         # Calculate confidence based on citation relevance

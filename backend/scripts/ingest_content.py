@@ -33,7 +33,15 @@ import google.generativeai as genai
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, PointStruct, VectorParams
 
-from src.core.config import settings
+# Import config directly without triggering src.core.__init__.py
+import importlib.util
+_spec = importlib.util.spec_from_file_location(
+    "config",
+    Path(__file__).parent.parent / "src" / "core" / "config.py"
+)
+_config_module = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_config_module)
+settings = _config_module.settings
 
 
 # Configuration
@@ -481,9 +489,12 @@ async def main():
             api_key=settings.qdrant_api_key,
         )
     else:
-        # Use local in-memory client for testing
-        print("Warning: Using in-memory Qdrant (data will not persist)")
-        client = QdrantClient(":memory:")
+        # Use local persistent storage
+        from pathlib import Path
+        qdrant_path = Path(settings.qdrant_path)
+        qdrant_path.mkdir(parents=True, exist_ok=True)
+        print(f"Using local Qdrant storage at: {qdrant_path.absolute()}")
+        client = QdrantClient(path=str(qdrant_path))
 
     # Find content directory
     content_dir = Path(args.content_dir)
