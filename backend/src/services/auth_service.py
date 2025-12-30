@@ -41,7 +41,9 @@ class AuthService:
         Returns:
             Hashed password string.
         """
-        return pwd_context.hash(password)
+        # bcrypt has 72-byte limit, truncate if necessary
+        password_bytes = password.encode('utf-8')[:72].decode('utf-8', errors='ignore')
+        return pwd_context.hash(password_bytes)
 
     @staticmethod
     def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -54,7 +56,9 @@ class AuthService:
         Returns:
             True if password matches, False otherwise.
         """
-        return pwd_context.verify(plain_password, hashed_password)
+        # bcrypt has 72-byte limit, truncate if necessary
+        password_bytes = plain_password.encode('utf-8')[:72].decode('utf-8', errors='ignore')
+        return pwd_context.verify(password_bytes, hashed_password)
 
     @staticmethod
     def create_access_token(
