@@ -73,6 +73,32 @@ OUT_OF_SCOPE_KEYWORDS = [
     "stock", "crypto", "investment", "recipe", "cooking",
 ]
 
+# Greeting patterns for detection
+GREETING_PATTERNS = [
+    "hello", "hi", "hey", "hola", "greetings", "good morning", "good afternoon",
+    "good evening", "good night", "howdy", "what's up", "whats up", "sup",
+    "salam", "assalam", "aoa", "slam", "slaam", "adaab", "namaste",
+    "how are you", "how r u", "kaise ho", "kya haal", "theek ho",
+]
+
+# Greeting responses
+GREETING_RESPONSES = {
+    "en": (
+        "Hello! I'm the AI Assistant for the Humanoid Robotics Textbook. "
+        "I can help you learn about humanoid robots, their components, sensors, "
+        "actuators, and control systems. Feel free to ask me any questions about "
+        "the textbook content!\n\n"
+        "Try asking: 'What is a humanoid robot?' or 'How do robots maintain balance?'"
+    ),
+    "ur": (
+        "السلام علیکم! میں ہیومنائیڈ روبوٹکس ٹیکسٹ بک کا AI اسسٹنٹ ہوں۔ "
+        "میں آپ کو ہیومنائیڈ روبوٹس، ان کے اجزاء، سینسرز، ایکچویٹرز اور کنٹرول سسٹمز "
+        "کے بارے میں سیکھنے میں مدد کر سکتا ہوں۔ درسی کتاب کے مواد کے بارے میں "
+        "کوئی بھی سوال پوچھیں!\n\n"
+        "پوچھ کر دیکھیں: 'ہیومنائیڈ روبوٹ کیا ہے؟' یا 'روبوٹ توازن کیسے برقرار رکھتے ہیں؟'"
+    ),
+}
+
 
 class RAGService:
     """Service for RAG-based question answering."""
@@ -92,6 +118,28 @@ class RAGService:
         self.qdrant = qdrant or qdrant_client
         self.collection_name = settings.qdrant_collection
         self.top_k = settings.rag_top_k
+
+    def _is_greeting(self, query: str) -> bool:
+        """Check if query is a greeting.
+
+        Args:
+            query: User's message.
+
+        Returns:
+            True if query is a greeting.
+        """
+        query_lower = query.lower().strip()
+
+        # Check for exact or near-exact greeting matches
+        for pattern in GREETING_PATTERNS:
+            # Exact match or starts with greeting
+            if query_lower == pattern or query_lower.startswith(pattern + " "):
+                return True
+            # Short messages that contain greeting
+            if len(query_lower) < 30 and pattern in query_lower:
+                return True
+
+        return False
 
     def _is_out_of_scope(self, query: str) -> bool:
         """Check if query is likely out of scope.
@@ -266,6 +314,16 @@ Please answer the question based on the context provided. If the context doesn't
         Returns:
             RAG response with answer and citations.
         """
+        # Check for greetings first
+        if self._is_greeting(question):
+            greeting_response = GREETING_RESPONSES.get(language, GREETING_RESPONSES["en"])
+            return RAGResponse(
+                answer=greeting_response,
+                citations=[],
+                is_out_of_scope=False,
+                confidence=1.0,
+            )
+
         # Check for obviously out-of-scope queries
         if self._is_out_of_scope(question):
             return RAGResponse(
