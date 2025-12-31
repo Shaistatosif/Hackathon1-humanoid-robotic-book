@@ -75,10 +75,12 @@ OUT_OF_SCOPE_KEYWORDS = [
 
 # Greeting patterns for detection
 GREETING_PATTERNS = [
-    "hello", "hi", "hey", "hola", "greetings", "good morning", "good afternoon",
-    "good evening", "good night", "howdy", "what's up", "whats up", "sup",
+    "hello", "helo", "hllo", "hi", "hii", "hey", "heyy", "hola", "greetings",
+    "good morning", "good afternoon", "good evening", "good night", "howdy",
+    "what's up", "whats up", "sup", "yo", "hy",
     "salam", "assalam", "aoa", "slam", "slaam", "adaab", "namaste",
     "how are you", "how r u", "kaise ho", "kya haal", "theek ho",
+    "thanks", "thank you", "shukriya", "ok", "okay", "bye", "goodbye",
 ]
 
 # Greeting responses
