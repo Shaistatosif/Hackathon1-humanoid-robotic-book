@@ -167,9 +167,9 @@ const config: Config = {
     announcementBar: {
       id: 'hackathon_notice',
       content:
-        '🤖 This AI-native textbook is part of a hackathon project. <a target="_blank" rel="noopener noreferrer" href="https://github.com/Shaistatosif/Hackathon1-humanoid-robotic-book">Learn more</a>',
-      backgroundColor: '#fafbfc',
-      textColor: '#091E42',
+        '🤖 AI-Powered Humanoid Robotics Textbook - Built for the future of learning! <a target="_blank" rel="noopener noreferrer" href="https://github.com/Shaistatosif/Hackathon1-humanoid-robotic-book">View on GitHub</a>',
+      backgroundColor: '#3b82f6',
+      textColor: '#ffffff',
       isCloseable: true,
     },
   } satisfies Preset.ThemeConfig,
